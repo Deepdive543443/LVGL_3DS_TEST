@@ -1,5 +1,6 @@
 #include "3ds.h"
 #include "stdio.h"
+#include <pthread.h>
 #include "lvgl/lvgl.h"
 // #include "lv_drv_conf.h"
 // #include "lv_conf.h"
