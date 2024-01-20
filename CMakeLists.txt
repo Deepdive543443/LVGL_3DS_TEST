@@ -5,8 +5,8 @@ project(LVGL-demo.elf)
 # project(LVGL-demo.elf LANGUAGES C)
 
 set(APP_TITLE LVGL_3DSDEMO)
-# set(APP_DESCRIPTION "Light_weight object detection toolkits powered by NCNN")
-# set(APP_AUTHOR Deepdive543443)
+set(APP_DESCRIPTION "A Demo of LVGL on 3DS")
+set(APP_AUTHOR Deepdive543443)
 # set(APP_ICON 48_ncnn.png)
 # set(ROMFS romfs)
 

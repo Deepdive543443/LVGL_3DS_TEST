@@ -1,7 +1,7 @@
 #include "3ds.h"
 #include "stdio.h"
 #include <pthread.h>
-#include "lvgl/lvgl.h"
+#include "lvgl-8.3.11/lvgl.h"
 // #include "lv_drv_conf.h"
 // #include "lv_conf.h"
 
@@ -68,9 +68,18 @@ void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * col
     lv_disp_flush_ready(disp);         /* Indicate you are ready with the flushing*/
 }
 
+void lv_example_spinner_3ds(void)
+{
+    /*Create a spinner*/
+    lv_obj_t * spinner = lv_spinner_create(lv_scr_act(), 60, 60);
+    lv_obj_set_size(spinner, 50, 50);
+    lv_obj_center(spinner);
+}
+
 
 int main(int argc, char** argv)
 {
+    // Console init
     gfxInitDefault();
     u32 kDown;
     u32 kHeld;
@@ -78,13 +87,13 @@ int main(int argc, char** argv)
     consoleInit(GFX_TOP, &topScreen);
     consoleSelect(&topScreen);
 
+    // IVGL init
     lv_init();
 
     // Draw buffer
     static lv_disp_draw_buf_t draw_buf;
-    static lv_color_t buf1[WIDTH_BTM * HEIGHT_BTM / 10];
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, WIDTH_BTM * HEIGHT_BTM / 10);
-    
+    static lv_color_t buf1[WIDTH_BTM * HEIGHT_BTM * 2];
+    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, WIDTH_BTM * HEIGHT_BTM * 2);
     
     static lv_disp_drv_t disp_drv;        /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
@@ -94,7 +103,10 @@ int main(int argc, char** argv)
     disp_drv.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
     lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
 
-    lv_example_btnmatrix_2();
+
+    // Examples
+    // lv_example_btnmatrix_2();
+    lv_example_spinner_3ds();
     
 
     /* Display init */
