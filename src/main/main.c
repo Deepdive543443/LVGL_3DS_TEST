@@ -189,6 +189,10 @@ int main(int argc, char** argv)
 
         lv_timer_handler();
 
+        // TODO -- figure out correct way to tick
+        usleep(5000);
+        lv_tick_inc(5);
+
     }
     return 0;
 }
