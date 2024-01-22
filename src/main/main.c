@@ -50,7 +50,6 @@ void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * col
     // int32_t x, y;
     /*It's a very slow but simple implementation.
      *`set_pixel` needs to be written by you to a set pixel on the screen*/
-    printf("Ja\n");
     writePic2FrameBuf565(
         gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, NULL, NULL),
         color_p,
@@ -154,14 +153,15 @@ int main(int argc, char** argv)
     disp_drv.draw_buf = &draw_buf;        /*Assign the buffer to the display*/
     disp_drv.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
     disp_drv.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
+    disp_drv.direct_mode = 1;
     lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
 
 
     // Examples
-    lv_example_btnmatrix_2();
+    // lv_example_btnmatrix_2();
     // lv_example_style_13();
     // lv_example_spinner_3ds();
-    // lv_example_anim_2();
+    lv_example_anim_2();
     
 
     /* Display init */
@@ -190,8 +190,8 @@ int main(int argc, char** argv)
         lv_timer_handler();
 
         // TODO -- figure out correct way to tick
-        usleep(5000);
-        lv_tick_inc(5);
+        usleep(1000);
+        lv_tick_inc(1);
 
     }
     return 0;
