@@ -907,7 +907,7 @@
 #endif
 
 /*Demonstrate the usage of encoder and keyboard*/
-#define LV_USE_DEMO_KEYPAD_AND_ENCODER 0
+#define LV_USE_DEMO_KEYPAD_AND_ENCODER 1
 
 /*Benchmark your system*/
 #define LV_USE_DEMO_BENCHMARK 1
@@ -938,10 +938,10 @@
 #define LV_USE_DEMO_TRANSFORM       0
 
 /*Demonstrate scroll settings*/
-#define LV_USE_DEMO_SCROLL          0
+#define LV_USE_DEMO_SCROLL          1
 
 /*Vector graphic demo*/
-#define LV_USE_DEMO_VECTOR_GRAPHIC  0
+#define LV_USE_DEMO_VECTOR_GRAPHIC  1
 /*--END OF LV_CONF_H--*/
 
 #endif /*LV_CONF_H*/

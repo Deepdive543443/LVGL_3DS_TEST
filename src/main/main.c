@@ -122,19 +122,46 @@ int main(int argc, char** argv)
 
     // Demo
     lv_demo_widgets();
+    int demo_idx = 0;
     // lv_demo_benchmark();
     // lv_example_get_started_1();
 
 
 
-    printf("Hello, LVGL on 3ds\n");
+    printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
     while(aptMainLoop())
     {
         // User input
         hidScanInput();
         kDown = hidKeysDown();
         kHeld = hidKeysHeld();
-        // hidTouchRead(&touch);
+
+        if(kDown & KEY_SELECT)
+        {
+            switch (demo_idx)
+            {
+                case 0:
+                    lv_demo_widgets_close();
+                    demo_idx++;
+                    lv_demo_benchmark();
+                    break;
+
+                case 1:
+                    lv_demo_benchmark_close();
+                    demo_idx++;
+                    lv_demo_keypad_encoder();
+                    break;
+
+                case 2:
+                    lv_demo_keypad_encoder_close();
+                    demo_idx = 0;
+                    lv_demo_widgets();
+                    break;
+            
+                default:
+                    break;
+            }
+        }
 
         // Quit App
         if(kHeld & KEY_START) break;
