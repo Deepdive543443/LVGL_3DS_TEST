@@ -9,7 +9,7 @@
 #define HEIGHT_TOP 240
 
 // User input place holder
-static touchPosition touch;
+// static touchPosition touch;
 static u32 kDown;
 static u32 kHeld;
 
@@ -65,12 +65,10 @@ void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * col
 
 void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
 {
-
+    touchPosition touch;
     hidTouchRead(&touch);
-    printf("\x1b[2;0H%03d; %03d", touch.px, touch.py);
     if(touch.px >=5 && touch.py >=5)
     {
-        printf("Ja\n");
         data->point.x = touch.px;
         data->point.y = touch.py;
         data->state = LV_INDEV_STATE_PRESSED;
