@@ -1,16 +1,17 @@
 #include "3ds.h"
 #include "stdio.h"
-#include <pthread.h>
 #include "lvgl-8.3.11/lvgl.h"
 
 #define WIDTH_BTM 320
 #define HEIGHT_BTM 240
 
-
 #define WIDTH_TOP 400
 #define HEIGHT_TOP 240
 
+// User input place holder
 static touchPosition touch;
+static u32 kDown;
+static u32 kHeld;
 
 void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16 h)
 {
@@ -48,9 +49,9 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
 
 void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
 {
-    // int32_t x, y;
-    /*It's a very slow but simple implementation.
-     *`set_pixel` needs to be written by you to a set pixel on the screen*/
+    /* Update and swap frame buffer
+     * TODO -- figure out a more efficient solution.
+     * */
     writePic2FrameBuf565(
         gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, NULL, NULL),
         color_p,
@@ -65,12 +66,12 @@ void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * col
     gspWaitForVBlank();
     gfxSwapBuffers();
 
-    lv_disp_flush_ready(disp);         /* Indicate you are ready with the flushing*/
+    lv_disp_flush_ready(disp);
 }
 
 void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
 {
-    // printf("Nein\n");
+
     hidTouchRead(&touch);
     printf("\x1b[2;0H%03d; %03d", touch.px, touch.py);
     if(touch.px >=5 && touch.py >=5)
@@ -90,14 +91,9 @@ int main(int argc, char** argv)
 {
     // Console init
     gfxInitDefault();
-    u32 kDown;
-    u32 kHeld;
     PrintConsole topScreen;
     consoleInit(GFX_TOP, &topScreen);
     consoleSelect(&topScreen);
-
-    // Input init
-    // static touchPosition touch;
 
     // IVGL init
     lv_init();
@@ -124,6 +120,7 @@ int main(int argc, char** argv)
     indev_drv_touch.read_cb = touch_cb_3ds;
     lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv_touch);
 
+    /* Choose one example or demo from below*/
     // Examples
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
@@ -151,8 +148,8 @@ int main(int argc, char** argv)
         if(kHeld & KEY_START) break;
 
         lv_timer_handler();
-        usleep(1000);
-        lv_tick_inc(1);
+        usleep(5000);
+        lv_tick_inc(5);
     }
     return 0;
 }
