@@ -5,11 +5,15 @@
 // #include "lv_drv_conf.h"
 // #include "lv_conf.h"
 
-#define HEIGHT_BTM 240
 #define WIDTH_BTM 320
+#define HEIGHT_BTM 240
+
 
 #define WIDTH_TOP 400
 #define HEIGHT_TOP 240
+
+static touchPosition touch;
+
 
 void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16 h)
 {
@@ -65,6 +69,24 @@ void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * col
     gfxSwapBuffers();
 
     lv_disp_flush_ready(disp);         /* Indicate you are ready with the flushing*/
+}
+
+void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
+{
+    // printf("Nein\n");
+    hidTouchRead(&touch);
+    printf("\x1b[2;0H%03d; %03d", touch.px, touch.py);
+    if(touch.px >=5 && touch.py >=5)
+    {
+        printf("Ja\n");
+        data->point.x = touch.px;
+        data->point.y = touch.py;
+        data->state = LV_INDEV_STATE_PRESSED;
+    }
+    else 
+    {
+        data->state = LV_INDEV_STATE_RELEASED;
+    }
 }
 
 // static void anim_x_cb(void * var, int32_t v)
@@ -139,6 +161,9 @@ int main(int argc, char** argv)
     consoleInit(GFX_TOP, &topScreen);
     consoleSelect(&topScreen);
 
+    // Input init
+    // static touchPosition touch;
+
     // IVGL init
     lv_init();
 
@@ -146,7 +171,8 @@ int main(int argc, char** argv)
     static lv_disp_draw_buf_t draw_buf;
     static lv_color_t buf1[WIDTH_BTM * HEIGHT_BTM];
     lv_disp_draw_buf_init(&draw_buf, buf1, NULL, WIDTH_BTM * HEIGHT_BTM);
-    
+
+    // Display init
     static lv_disp_drv_t disp_drv;        /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
     disp_drv.flush_cb = flush_cb_3ds;    /*Set your driver function*/
@@ -156,12 +182,18 @@ int main(int argc, char** argv)
     disp_drv.direct_mode = 1;
     lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
 
+    // Touchpad init
+    static lv_indev_drv_t indev_drv_touch;
+    lv_indev_drv_init(&indev_drv_touch);      /*Basic initialization*/
+    indev_drv_touch.type = LV_INDEV_TYPE_POINTER;
+    indev_drv_touch.read_cb = touch_cb_3ds;
+    lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv_touch);
 
     // Examples
     // lv_example_btnmatrix_2();
-    // lv_example_style_13();
+    lv_example_style_13();
     // lv_example_spinner_3ds();
-    lv_example_anim_2();
+    // lv_example_anim_2();
     
 
     /* Display init */
@@ -181,14 +213,12 @@ int main(int argc, char** argv)
         hidScanInput();
         kDown = hidKeysDown();
         kHeld = hidKeysHeld();
-        touchPosition touch;
-        hidTouchRead(&touch);
+        // hidTouchRead(&touch);
 
         // Quit App
         if(kHeld & KEY_START) break;
 
         lv_timer_handler();
-
         // TODO -- figure out correct way to tick
         usleep(1000);
         lv_tick_inc(1);
