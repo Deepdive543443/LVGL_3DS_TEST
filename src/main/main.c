@@ -23,7 +23,7 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
 
     u8 *fb_8 = (u8*) fb;
 
-    int i, j, draw_x, draw_y;
+    u16 i, j, draw_x, draw_y;
     for(j = 0; j < h; j++)
     {
         for(i = 0; i < w; i++)
