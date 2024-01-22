@@ -22,7 +22,6 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
      * */
 
     u8 *fb_8 = (u8*) fb;
-    // u16 *img_16 = (u16*) img;
 
     int i, j, draw_x, draw_y;
     for(j = 0; j < h; j++)
@@ -110,7 +109,7 @@ int main(int argc, char** argv)
     disp_drv.draw_buf = &draw_buf;        /*Assign the buffer to the display*/
     disp_drv.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
     disp_drv.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
-    disp_drv.direct_mode = 1;
+    disp_drv.direct_mode = 1;           /*Enable direct mode*/
     lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
 
     // Touchpad init
