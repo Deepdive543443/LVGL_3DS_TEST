@@ -32,15 +32,10 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
             draw_x = x + i;
 
             u32 v = (draw_y + draw_x * h) * 3;
-            // u16 data = img_16[j * w + i];
 
-            u8 r = color[j * w + i].ch.red << 3;    //((data >> 11) & 0x1F) << 3;
-            u8 g = color[j * w + i].ch.green << 2;  //((data >> 5) & 0x3F) << 2;
-            u8 b = color[j * w + i].ch.blue << 3;   //(data & 0x1F) << 3;
-
-            fb_8[v] = b;
-            fb_8[v + 1] = g;
-            fb_8[v + 2] = r;
+            fb_8[v + 2] = color[j * w + i].ch.red << 3;    //((data >> 11) & 0x1F) << 3;
+            fb_8[v + 1] = color[j * w + i].ch.green << 2;  //((data >> 5) & 0x3F) << 2;
+            fb_8[v] = color[j * w + i].ch.blue << 3;   //(data & 0x1F) << 3;
         }
     }
 
