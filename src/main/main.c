@@ -57,8 +57,10 @@ void flush_cb_3ds_btm(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t *
 
     // These three lines swap and display new buffer on screen
     gfxFlushBuffers();
+    gfxScreenSwapBuffers(GFX_BOTTOM,true);
     gspWaitForVBlank();
-    gfxSwapBuffers();
+    // gfxSwapBuffersGpu();
+    // gfxSwapBuffers();
 
     lv_disp_flush_ready(disp);
 }
