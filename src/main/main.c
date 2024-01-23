@@ -41,7 +41,7 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
 
 }
 
-void flush_cb_3ds(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
+void flush_cb_3ds_btm(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
 {
     /* Update and swap frame buffer
      * TODO -- figure out a more efficient solution.
@@ -91,19 +91,20 @@ int main(int argc, char** argv)
     lv_init();
 
     // Draw buffer
-    static lv_disp_draw_buf_t draw_buf;
-    static lv_color_t buf1[WIDTH_BTM * HEIGHT_BTM];
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, WIDTH_BTM * HEIGHT_BTM);
+    static lv_disp_draw_buf_t draw_buf_btm;
+    static lv_color_t buf1_btm[WIDTH_BTM * HEIGHT_BTM];
+    lv_disp_draw_buf_init(&draw_buf_btm, buf1_btm, NULL, WIDTH_BTM * HEIGHT_BTM);
 
     // Display init
-    static lv_disp_drv_t disp_drv;        /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
-    disp_drv.flush_cb = flush_cb_3ds;    /*Set your driver function*/
-    disp_drv.draw_buf = &draw_buf;        /*Assign the buffer to the display*/
-    disp_drv.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
-    disp_drv.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
-    disp_drv.direct_mode = 1;           /*Enable direct mode*/
-    lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
+    static lv_disp_drv_t disp_drv_btm;        /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv_btm);          /*Basic initialization*/
+    disp_drv_btm.flush_cb = flush_cb_3ds_btm;    /*Set your driver function*/
+    disp_drv_btm.draw_buf = &draw_buf_btm;        /*Assign the buffer to the display*/
+    disp_drv_btm.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
+    disp_drv_btm.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
+    disp_drv_btm.direct_mode = 1;           /*Enable direct mode*/
+    lv_disp_drv_register(&disp_drv_btm);      /*Finally register the driver*/
+    // lv_disp_set_default(&disp_drv_btm);
 
     // Touchpad init
     static lv_indev_drv_t indev_drv_touch;
