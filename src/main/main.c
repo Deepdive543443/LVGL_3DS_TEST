@@ -9,7 +9,6 @@
 static struct timespec start, end;
 
 // User input place holder
-// static touchPosition touch;
 static u32 kDown;
 static u32 kHeld;
 
