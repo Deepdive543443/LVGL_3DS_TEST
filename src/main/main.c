@@ -105,6 +105,37 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     }
 }
 
+lv_disp_t *display_init(gfxScreen_t gfx_scr, lv_disp_draw_buf_t *draw_buf, lv_color_t *buf1, lv_disp_drv_t *disp_drv)
+{
+    lv_disp_drv_init(disp_drv);
+    
+    switch (gfx_scr)
+    {
+        case GFX_TOP:
+            lv_disp_draw_buf_init(draw_buf, buf1, NULL, WIDTH_TOP * HEIGHT_TOP);
+            disp_drv->flush_cb = flush_cb_3ds_top;    /*Set your driver function*/
+            disp_drv->hor_res = WIDTH_TOP;   /*Set the horizontal resolution of the display*/
+            disp_drv->ver_res = HEIGHT_TOP;   /*Set the vertical resolution of the display*/
+            break;
+
+        case GFX_BOTTOM:
+            lv_disp_draw_buf_init(draw_buf, buf1, NULL, WIDTH_BTM * HEIGHT_BTM);
+            disp_drv->flush_cb = flush_cb_3ds_btm;    /*Set your driver function*/
+            disp_drv->hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
+            disp_drv->ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
+            break;
+        
+        default:
+            break;
+    }
+
+    disp_drv->draw_buf = draw_buf;
+    disp_drv->direct_mode = 1;
+    return lv_disp_drv_register(disp_drv);;
+}
+
+
+
 int main(int argc, char** argv)
 {
     // Console init
@@ -119,30 +150,14 @@ int main(int argc, char** argv)
     // Display init
     static lv_disp_draw_buf_t draw_buf_btm;
     static lv_color_t buf1_btm[WIDTH_BTM * HEIGHT_BTM];
-    lv_disp_draw_buf_init(&draw_buf_btm, buf1_btm, NULL, WIDTH_BTM * HEIGHT_BTM);
-
     static lv_disp_drv_t disp_drv_btm;        /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv_btm);          /*Basic initialization*/
-    disp_drv_btm.flush_cb = flush_cb_3ds_btm;    /*Set your driver function*/
-    disp_drv_btm.draw_buf = &draw_buf_btm;        /*Assign the buffer to the display*/
-    disp_drv_btm.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
-    disp_drv_btm.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
-    disp_drv_btm.direct_mode = 1;           /*Enable direct mode*/
-    lv_disp_t *disp_btm = lv_disp_drv_register(&disp_drv_btm);      /*Register function will return the display ptr*/
+    lv_disp_t *disp_btm = display_init(GFX_BOTTOM, &draw_buf_btm, &buf1_btm, &disp_drv_btm);
 
 
     static lv_disp_draw_buf_t draw_buf_top;
     static lv_color_t buf1_top[WIDTH_TOP * HEIGHT_TOP];
-    lv_disp_draw_buf_init(&draw_buf_top, buf1_top, NULL, WIDTH_BTM * HEIGHT_BTM);
-
     static lv_disp_drv_t disp_drv_top;        /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv_top);          /*Basic initialization*/
-    disp_drv_top.flush_cb = flush_cb_3ds_top;    /*Set your driver function*/
-    disp_drv_top.draw_buf = &draw_buf_top;        /*Assign the buffer to the display*/
-    disp_drv_top.hor_res = WIDTH_TOP;   /*Set the horizontal resolution of the display*/
-    disp_drv_top.ver_res = HEIGHT_TOP;   /*Set the vertical resolution of the display*/
-    disp_drv_top.direct_mode = 1;           /*Enable direct mode*/
-    lv_disp_t *disp_top = lv_disp_drv_register(&disp_drv_top);      /*Finally register the driver*/
+    lv_disp_t *disp_top = display_init(GFX_TOP, &draw_buf_top, &buf1_top, &disp_drv_top);
 
     // Touchpad init
     static lv_indev_drv_t indev_drv_touch;
