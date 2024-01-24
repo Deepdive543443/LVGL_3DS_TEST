@@ -51,8 +51,8 @@ void flush_cb_3ds_btm(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t *
         color_p,
         0,
         0,
-        WIDTH_BTM,
-        HEIGHT_BTM
+        disp->hor_res,
+        disp->ver_res
     );
 
     // These three lines swap and display new buffer on screen
@@ -75,8 +75,8 @@ void flush_cb_3ds_top(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t *
         color_p,
         0,
         0,
-        WIDTH_TOP,
-        HEIGHT_TOP
+        disp->hor_res,
+        disp->ver_res
     );
 
     // These three lines swap and display new buffer on screen
