@@ -37,6 +37,18 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     }
 }
 
+void create_button(u16 x, u16 y, u16 w, u16 h)
+{
+    lv_obj_t *btn = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/
+    lv_obj_set_pos(btn, x, y);                            /*Set its position*/
+    lv_obj_set_size(btn, w, h);
+
+    lv_obj_t * label = lv_label_create(btn);          /*Add a label to the button*/
+    lv_label_set_text(label, "Button");                     /*Set the labels text*/
+    lv_obj_center(label);
+}
+
+
 lv_obj_t *put_text_example(const char *string)
 {
     static lv_style_t style;
@@ -97,6 +109,8 @@ int main(int argc, char** argv)
     // Examples
     lv_disp_set_default(disp_top);
     lv_obj_t *top_text = put_text_example("init");
+    create_button(-20, 0, 90, 30);
+    create_button(320, 0, 90, 30);
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
