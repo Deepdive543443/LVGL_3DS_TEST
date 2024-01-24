@@ -65,6 +65,30 @@ void flush_cb_3ds_btm(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t *
     lv_disp_flush_ready(disp);
 }
 
+void flush_cb_3ds_top(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
+{
+    /* Update and swap frame buffer
+     * TODO -- figure out a more efficient solution.
+     * */
+    writePic2FrameBuf565(
+        gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL),
+        color_p,
+        0,
+        0,
+        WIDTH_TOP,
+        HEIGHT_TOP
+    );
+
+    // These three lines swap and display new buffer on screen
+    gfxFlushBuffers();
+    gfxScreenSwapBuffers(GFX_TOP,true);
+    gspWaitForVBlank();
+    // gfxSwapBuffersGpu();
+    // gfxSwapBuffers();
+
+    lv_disp_flush_ready(disp);
+}
+
 void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
 {
     touchPosition touch;
@@ -85,19 +109,18 @@ int main(int argc, char** argv)
 {
     // Console init
     gfxInitDefault();
-    PrintConsole topScreen;
-    consoleInit(GFX_TOP, &topScreen);
-    consoleSelect(&topScreen);
+    // PrintConsole topScreen;
+    // consoleInit(GFX_TOP, &topScreen);
+    // consoleSelect(&topScreen);
 
     // IVGL init
     lv_init();
 
-    // Draw buffer
+    // Display init
     static lv_disp_draw_buf_t draw_buf_btm;
     static lv_color_t buf1_btm[WIDTH_BTM * HEIGHT_BTM];
     lv_disp_draw_buf_init(&draw_buf_btm, buf1_btm, NULL, WIDTH_BTM * HEIGHT_BTM);
 
-    // Display init
     static lv_disp_drv_t disp_drv_btm;        /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv_btm);          /*Basic initialization*/
     disp_drv_btm.flush_cb = flush_cb_3ds_btm;    /*Set your driver function*/
@@ -105,8 +128,21 @@ int main(int argc, char** argv)
     disp_drv_btm.hor_res = WIDTH_BTM;   /*Set the horizontal resolution of the display*/
     disp_drv_btm.ver_res = HEIGHT_BTM;   /*Set the vertical resolution of the display*/
     disp_drv_btm.direct_mode = 1;           /*Enable direct mode*/
-    lv_disp_drv_register(&disp_drv_btm);      /*Finally register the driver*/
-    // lv_disp_set_default(&disp_drv_btm);
+    lv_disp_t *disp_btm = lv_disp_drv_register(&disp_drv_btm);      /*Register function will return the display ptr*/
+
+
+    static lv_disp_draw_buf_t draw_buf_top;
+    static lv_color_t buf1_top[WIDTH_TOP * HEIGHT_TOP];
+    lv_disp_draw_buf_init(&draw_buf_top, buf1_top, NULL, WIDTH_BTM * HEIGHT_BTM);
+
+    static lv_disp_drv_t disp_drv_top;        /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv_top);          /*Basic initialization*/
+    disp_drv_top.flush_cb = flush_cb_3ds_top;    /*Set your driver function*/
+    disp_drv_top.draw_buf = &draw_buf_top;        /*Assign the buffer to the display*/
+    disp_drv_top.hor_res = WIDTH_TOP;   /*Set the horizontal resolution of the display*/
+    disp_drv_top.ver_res = HEIGHT_TOP;   /*Set the vertical resolution of the display*/
+    disp_drv_top.direct_mode = 1;           /*Enable direct mode*/
+    lv_disp_t *disp_top = lv_disp_drv_register(&disp_drv_top);      /*Finally register the driver*/
 
     // Touchpad init
     static lv_indev_drv_t indev_drv_touch;
@@ -117,13 +153,15 @@ int main(int argc, char** argv)
 
     /* Choose one example or demo from below*/
     // Examples
+    lv_disp_set_default(disp_top);
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
     // lv_example_spinner_3ds();
-    // lv_example_anim_2();
+    lv_example_anim_2();
 
     // Demo
+    lv_disp_set_default(disp_btm);
     lv_demo_widgets();
     int demo_idx = 0;
     // lv_demo_benchmark();
@@ -131,7 +169,7 @@ int main(int argc, char** argv)
 
 
 
-    printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
+    // printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
     while(aptMainLoop())
     {
         // User input
@@ -170,8 +208,8 @@ int main(int argc, char** argv)
         if(kHeld & KEY_START) break;
 
         lv_timer_handler();
-        usleep(5000);
-        lv_tick_inc(5);
+        usleep(1000);
+        lv_tick_inc(1);
     }
     return 0;
 }
