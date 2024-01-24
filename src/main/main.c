@@ -1,9 +1,12 @@
-#include "time.h"
+#include <sys/time.h>
+#include "stdio.h"
 
 #include "3ds.h"
 #include "lvgl-8.3.11/lvgl.h"
 
 #include "sections.h"
+
+static struct timespec start, end;
 
 // User input place holder
 // static touchPosition touch;
@@ -26,7 +29,7 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     }
 }
 
-void put_text_example(const char *string)
+lv_obj_t *put_text_example(const char *string)
 {
     static lv_style_t style;
     lv_style_init(&style);
@@ -48,12 +51,20 @@ void put_text_example(const char *string)
 
     lv_obj_t * label = lv_label_create(obj);
     lv_label_set_text(label, string);
+
+    return label;
+}
+
+bool ticker()
+{
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+    return delta_us < 10000;
 }
 
 
 int main(int argc, char** argv)
 {
-    // Console init
     gfxInitDefault();
     // PrintConsole topScreen;
     // consoleInit(GFX_TOP, &topScreen);
@@ -84,8 +95,7 @@ int main(int argc, char** argv)
     /* Choose one example or demo from below*/
     // Examples
     lv_disp_set_default(disp_top);
-    char string[20] = "Ja, bitte!";
-    put_text_example(&string);
+    lv_obj_t *top_text = put_text_example("init");
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
@@ -103,8 +113,10 @@ int main(int argc, char** argv)
 
 
     // printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
+    
     while(aptMainLoop())
     {
+        clock_gettime(CLOCK_MONOTONIC, &start);
         // User input
         hidScanInput();
         kDown = hidKeysDown();
@@ -141,8 +153,15 @@ int main(int argc, char** argv)
         if(kHeld & KEY_START) break;
 
         lv_timer_handler();
-        usleep(1000);
-        lv_tick_inc(1);
+        while (ticker());
+
+        // Display latency
+        uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+        char top_string[30];
+        sprintf(top_string, "%d m sec", delta_us);
+        lv_label_set_text(top_text, top_string);
+        
+        lv_tick_inc(10);
     }
     return 0;
 }
