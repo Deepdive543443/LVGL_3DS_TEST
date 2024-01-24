@@ -1,12 +1,21 @@
-#include <sys/time.h>
+#include "sys/time.h"
 #include "stdio.h"
 
-#include "3ds.h"
+#include "3ds.h" 
 #include "lvgl-8.3.11/lvgl.h"
 
 #include "sections.h"
 
+
 static struct timespec start, end;
+
+bool ticker()
+{
+    /* Hands the main loop until it reach the tick time*/
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+    return delta_us < TICK_MS;
+}
 
 // User input place holder
 static u32 kDown;
@@ -19,7 +28,12 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     if(touch.px >=5 && touch.py >=5)
     {
         data->point.x = touch.px;
-        data->point.y = touch.py;
+        data->point.y = touch.py;bool ticker()
+{
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+    return delta_us < 10000;
+}
         data->state = LV_INDEV_STATE_PRESSED;
     }
     else 
@@ -52,13 +66,6 @@ lv_obj_t *put_text_example(const char *string)
     lv_label_set_text(label, string);
 
     return label;
-}
-
-bool ticker()
-{
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-    return delta_us < 10000;
 }
 
 
@@ -155,12 +162,12 @@ int main(int argc, char** argv)
         while (ticker());
 
         // Display latency
-        uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-        char top_string[30];
-        sprintf(top_string, "%d m sec", delta_us);
-        lv_label_set_text(top_text, top_string);
+        // uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+        // char top_string[30];
+        // sprintf(top_string, "%d m sec", delta_us);
+        // lv_label_set_text(top_text, top_string);
         
-        lv_tick_inc(10);
+        lv_tick_inc(TICK_S);
     }
     return 0;
 }
