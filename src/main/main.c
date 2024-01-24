@@ -28,12 +28,7 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     if(touch.px >=5 && touch.py >=5)
     {
         data->point.x = touch.px;
-        data->point.y = touch.py;bool ticker()
-{
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-    return delta_us < 10000;
-}
+        data->point.y = touch.py;
         data->state = LV_INDEV_STATE_PRESSED;
     }
     else 
