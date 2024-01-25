@@ -66,7 +66,9 @@ lv_obj_t *put_text_example(const char *string)
 
     /*Make a gradient*/
     lv_style_set_width(&style, 150);
-    lv_style_set_height(&style, LV_SIZE_CONTENT);
+    lv_style_set_height(&style, LV_SIZE_CONTENT); /* This enable a flexible width and height that change 
+                                                   * during inputing*/
+
 
     lv_style_set_pad_ver(&style, 20);
     lv_style_set_pad_left(&style, 5);
