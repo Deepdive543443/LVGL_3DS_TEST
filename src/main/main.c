@@ -41,19 +41,67 @@ void create_shoulder_button()
 {
     /* Create L, R button that aligned with top left and top right of screen
      * Width: 90,  Height: 30*/
-    lv_obj_t *btn_L = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
+    lv_obj_t *btn_L = lv_btn_create(lv_scr_act());    /*Add a button the current screen*/                            /*Set its position*/
     lv_obj_set_size(btn_L, 90, 30);
-    lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, -3, -3);
+    lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *label_L = lv_label_create(btn_L);          /*Add a label to the button*/
     lv_label_set_text(label_L, "L");                     /*Set the labels text*/
     lv_obj_align(label_L, LV_ALIGN_RIGHT_MID, 0, 0);
 
     lv_obj_t *btn_R = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
     lv_obj_set_size(btn_R, 90, 30);
-    lv_obj_align(btn_R, LV_ALIGN_TOP_RIGHT, 3, -3);
+    lv_obj_align(btn_R, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_obj_t *label_R = lv_label_create(btn_R);          /*Add a label to the button*/
     lv_label_set_text(label_R, "R");                     /*Set the labels text*/
     lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
+}
+
+void create_bottom_container()
+{
+    // lv_obj_t *btm_container = lv_obj_create(lv_scr_act());
+    // // lv_obj_set_align(btm_container, LV_ALIGN_BOTTOM_MID, 0, 0);
+    // lv_obj_align(btm_container, LV_ALIGN_BOTTOM_MID, 0, 0);
+    // lv_obj_set_size(btm_container, lv_pct(110), LV_SIZE_CONTENT);
+    // lv_obj_set_flex_align(btm_container,
+    //     LV_FLEX_ALIGN_START,
+    //     LV_FLEX_ALIGN_START,
+    //     LV_FLEX_ALIGN_START);
+
+    // lv_obj_t *btn_A = lv_btn_create(btm_container);
+    // lv_obj_t *btn_B = lv_btn_create(btm_container);
+    
+    // lv_obj_set_size(btn_A, lv_pct(50), 30);
+    // lv_obj_set_size(btn_B, lv_pct(50), 30);
+
+
+    static lv_style_t style_bg;
+    lv_style_init(&style_bg);
+    lv_style_set_pad_all(&style_bg, 0);
+    lv_style_set_pad_gap(&style_bg, 0);
+    lv_style_set_clip_corner(&style_bg, true);
+    lv_style_set_radius(&style_bg, 12);
+    
+    lv_style_set_border_width(&style_bg, 0);
+
+
+    static lv_style_t style_btn;
+    lv_style_init(&style_btn);
+    lv_style_set_radius(&style_btn, 0);
+    lv_style_set_border_width(&style_btn, 1);
+    lv_style_set_border_opa(&style_btn, LV_OPA_100);
+    lv_style_set_border_color(&style_btn, lv_palette_main(LV_PALETTE_GREY));
+    lv_style_set_border_side(&style_btn, LV_BORDER_SIDE_INTERNAL);
+    lv_style_set_radius(&style_btn, 0);
+
+
+    static const char *btnm_map[] = {"Action1", "Action2", "Action3", ""};
+    lv_obj_t *btnm1 = lv_btnmatrix_create(lv_scr_act());
+    lv_obj_align(btnm1, LV_ALIGN_BOTTOM_MID, 0, 15);
+    lv_obj_set_size(btnm1, lv_pct(100), lv_pct(20));
+    lv_btnmatrix_set_map(btnm1, btnm_map);
+    lv_obj_add_style(btnm1, &style_bg, 0);
+    lv_obj_add_style(btnm1, &style_btn, LV_PART_ITEMS);
+    
 }
 
 
@@ -120,8 +168,10 @@ int main(int argc, char** argv)
     /* Choose one example or demo from below*/
     // Examples
     lv_disp_set_default(disp_top);
+    lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("init");
     create_shoulder_button();
+    create_bottom_container();
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
