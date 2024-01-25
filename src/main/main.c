@@ -37,15 +37,24 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     }
 }
 
-void create_button(u16 x, u16 y, u16 w, u16 h, const *string)
+void create_button()
 {
-    lv_obj_t *btn = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/
-    lv_obj_set_pos(btn, x, y);                            /*Set its position*/
-    lv_obj_set_size(btn, w, h);
+    /* Create L, R button that aligned with top left and top right of screen
+     * Width: 90,  Height: 30*/
+    lv_obj_t *btn_L = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
+    lv_obj_set_size(btn_L, 90, 30);
+    lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, -3, -3);
+    lv_obj_t *label_L = lv_label_create(btn_L);          /*Add a label to the button*/
+    lv_label_set_text(label_L, "L");                     /*Set the labels text*/
+    lv_obj_align(label_L, LV_ALIGN_RIGHT_MID, 0, 0);
 
-    lv_obj_t * label = lv_label_create(btn);          /*Add a label to the button*/
-    lv_label_set_text(label, string);                     /*Set the labels text*/
-    lv_obj_center(label);
+    lv_obj_t *btn_R = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
+    lv_obj_set_size(btn_R, 90, 30);
+    lv_obj_align(btn_R, LV_ALIGN_TOP_RIGHT, 3, -3);
+    lv_obj_t *label_R = lv_label_create(btn_R);          /*Add a label to the button*/
+    lv_label_set_text(label_R, "R");                     /*Set the labels text*/
+    lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
+
 }
 
 
@@ -109,8 +118,7 @@ int main(int argc, char** argv)
     // Examples
     lv_disp_set_default(disp_top);
     lv_obj_t *top_text = put_text_example("init");
-    create_button(-10, 0, 90, 30, "L");
-    create_button(320, 0, 90, 30, "R");
+    create_button();
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
