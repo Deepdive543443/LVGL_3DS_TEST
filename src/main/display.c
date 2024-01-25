@@ -16,7 +16,7 @@ void writePic2FrameBuf565(void *fb, lv_color_t * color, u16 x, u16 y, u16 w, u16
     {
         for(i = 0; i < w; i++)
         {
-            draw_y = y + h - j;
+            draw_y = y + h - j - 1;
             draw_x = x + i;
 
             u32 v = (draw_y + draw_x * h) * 3;
