@@ -71,7 +71,7 @@ lv_obj_t *put_text_example(const char *string)
     lv_style_set_pad_ver(&style, 20);
     lv_style_set_pad_left(&style, 5);
 
-    lv_style_set_x(&style, lv_pct(2));
+    lv_style_set_x(&style, lv_pct(2)); // percentage of 2 
     lv_style_set_y(&style, 180);
 
     /*Create an object with the new style*/
