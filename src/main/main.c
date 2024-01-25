@@ -37,7 +37,7 @@ void touch_cb_3ds(lv_indev_drv_t * drv, lv_indev_data_t*data)
     }
 }
 
-void create_button()
+void create_shoulder_button()
 {
     /* Create L, R button that aligned with top left and top right of screen
      * Width: 90,  Height: 30*/
@@ -54,7 +54,6 @@ void create_button()
     lv_obj_t *label_R = lv_label_create(btn_R);          /*Add a label to the button*/
     lv_label_set_text(label_R, "R");                     /*Set the labels text*/
     lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
-
 }
 
 
@@ -73,8 +72,10 @@ lv_obj_t *put_text_example(const char *string)
     lv_style_set_pad_ver(&style, 20);
     lv_style_set_pad_left(&style, 5);
 
-    lv_style_set_x(&style, lv_pct(2)); // percentage of 2 
-    lv_style_set_y(&style, 180);
+    lv_style_set_align(&style, LV_ALIGN_CENTER);
+
+    // lv_style_set_x(&style, lv_pct(2)); // percentage of 2 
+    // lv_style_set_y(&style, 180);
 
     /*Create an object with the new style*/
     lv_obj_t *obj = lv_obj_create(lv_scr_act());
@@ -120,7 +121,7 @@ int main(int argc, char** argv)
     // Examples
     lv_disp_set_default(disp_top);
     lv_obj_t *top_text = put_text_example("init");
-    create_button();
+    create_shoulder_button();
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
