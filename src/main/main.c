@@ -17,9 +17,19 @@ bool ticker()
     return delta_us < TICK_MS;
 }
 
+void update_joy_stick(lv_obj_t *js, circlePosition *js_read)
+{
+    lv_obj_set_pos(
+        js,
+        js_read->dx * 0.06493f,
+        -js_read->dy * 0.06493f
+    );
+}
+
 // User input place holder
 static u32 kDown;
 static u32 kHeld;
+static circlePosition joy_stick;
 
 int main(int argc, char** argv)
 {
@@ -65,7 +75,7 @@ int main(int argc, char** argv)
     lv_obj_t *top_text = put_text_example("init");
     create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
-    create_joystick();
+    lv_obj_t *js = create_joystick();
 
     lv_group_t *g = lv_group_create();
     lv_group_add_obj(g, btnm1);
@@ -95,6 +105,8 @@ int main(int argc, char** argv)
         hidScanInput();
         kDown = hidKeysDown();
         kHeld = hidKeysHeld();
+        hidCircleRead(&joy_stick);
+
 
         if(kDown & KEY_SELECT)
         {
@@ -126,20 +138,14 @@ int main(int argc, char** argv)
         // Quit App
         if(kHeld & KEY_START) break;
 
+        update_joy_stick(js, &joy_stick);
+
         lv_timer_handler();
         while (ticker());
 
-        // Display latency
-        // uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+        // Display joystick
         char top_string[30];
-
-        sprintf(top_string, "Nein\n");
-
-        if (kHeld & KEY_RIGHT)
-        // if (kDown & KEY_A)
-        {
-            sprintf(top_string, "RIGHT holded");
-        }
+        sprintf(top_string, "Joy stick x: %5d\nJoy stick y: %5d", joy_stick.dx, joy_stick.dy);
         lv_label_set_text(top_text, top_string);    
         lv_tick_inc(TICK_S);
     }

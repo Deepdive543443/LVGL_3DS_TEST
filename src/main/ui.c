@@ -5,7 +5,7 @@
 
 
 
-void create_joystick()
+lv_obj_t *create_joystick()
 {
     // Create the container 
     lv_obj_t *cont = lv_obj_create(lv_scr_act());
@@ -25,9 +25,8 @@ void create_joystick()
     lv_obj_set_style_bg_color(js, lv_color_hex(0x777777), NULL);
     lv_obj_set_style_border_width(js, 5, NULL);
     lv_obj_set_style_border_color(js, lv_color_hex(0xbcbcbc), NULL);
-
-    // lv_obj_set_style_shadow_ofs_x();
-    lv_obj_set_pos(js, 7.8, 7.8); // Virtual offset
+    
+    return js;
 }
 
 void create_shoulder_button()
