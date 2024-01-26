@@ -17,4 +17,10 @@ void flush_cb_3ds_top(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *co
 void flush_cb_3ds(gfxScreen_t gfx_scr, lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
 lv_disp_t *display_init(gfxScreen_t gfx_scr, lv_disp_draw_buf_t *draw_buf, lv_color_t *buf1, lv_disp_drv_t *disp_drv);
 
+//ui.c
+void create_shoulder_button();
+void create_bottom_container();
+lv_obj_t *put_text_example(const char *string);
+
+
 #endif // SECTIONS_H
