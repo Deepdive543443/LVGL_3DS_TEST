@@ -65,6 +65,7 @@ int main(int argc, char** argv)
     lv_obj_t *top_text = put_text_example("init");
     create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
+    create_joystick();
 
     lv_group_t *g = lv_group_create();
     lv_group_add_obj(g, btnm1);

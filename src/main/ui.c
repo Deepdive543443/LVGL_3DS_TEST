@@ -1,5 +1,34 @@
 #include "sections.h"
 
+#define CANVAS_WIDTH 80
+#define CANVAS_HEIGHT 80
+
+
+
+void create_joystick()
+{
+    // Create the container 
+    lv_obj_t *cont = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(cont, CANVAS_WIDTH, CANVAS_HEIGHT);
+    lv_obj_align(cont, LV_ALIGN_LEFT_MID, 10, -40);
+    lv_obj_set_style_radius(cont, LV_RADIUS_CIRCLE, NULL);
+    lv_obj_set_style_clip_corner(cont, true, NULL);
+    lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
+
+    // Create the Joy stick
+    lv_obj_t *js = lv_obj_create(cont);
+    lv_obj_set_size(js, 50, 50);
+    lv_obj_center(js);
+    lv_obj_set_style_radius(js, LV_RADIUS_CIRCLE, NULL);
+    lv_obj_set_style_clip_corner(cont, true, NULL);
+    lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_bg_color(js, lv_color_hex(0x777777), NULL);
+    lv_obj_set_style_border_width(js, 5, NULL);
+    lv_obj_set_style_border_color(js, lv_color_hex(0xbcbcbc), NULL);
+
+    // lv_obj_set_style_shadow_ofs_x();
+    lv_obj_set_pos(js, 7.8, 7.8); // Virtual offset
+}
 
 void create_shoulder_button()
 {
