@@ -37,18 +37,26 @@ int main(int argc, char** argv)
     static lv_disp_drv_t disp_drv_btm;        /*Descriptor of a display driver*/
     lv_disp_t *disp_btm = display_init(GFX_BOTTOM, &draw_buf_btm, &buf1_btm, &disp_drv_btm);
 
-
     static lv_disp_draw_buf_t draw_buf_top;
     static lv_color_t buf1_top[WIDTH_TOP * HEIGHT_TOP];
     static lv_disp_drv_t disp_drv_top;        /*Descriptor of a display driver*/
     lv_disp_t *disp_top = display_init(GFX_TOP, &draw_buf_top, &buf1_top, &disp_drv_top);
+
 
     // Touchpad init
     static lv_indev_drv_t indev_drv_touch;
     lv_indev_drv_init(&indev_drv_touch);      /*Basic initialization*/
     indev_drv_touch.type = LV_INDEV_TYPE_POINTER;
     indev_drv_touch.read_cb = touch_cb_3ds;
-    lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv_touch);
+    lv_indev_t *touch_indev = lv_indev_drv_register(&indev_drv_touch);
+
+
+    static lv_indev_drv_t indev_drv_cross;
+    lv_indev_drv_init(&indev_drv_cross);
+    indev_drv_cross.type = LV_INDEV_TYPE_ENCODER;
+    indev_drv_cross.read_cb = encoder_cb_3ds;
+    lv_indev_t *enc_indev = lv_indev_drv_register(&indev_drv_cross);
+
 
     /* Choose one example or demo from below*/
     // Examples
@@ -56,7 +64,11 @@ int main(int argc, char** argv)
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("init");
     create_shoulder_button();
-    create_bottom_container();
+    lv_obj_t *btnm1 = create_bottom_container();
+
+    lv_group_t *g = lv_group_create();
+    lv_group_add_obj(g, btnm1);
+    lv_indev_set_group(enc_indev, g);
     // lv_example_btnmatrix_2();
     // lv_example_calendar_1();
     // lv_example_style_13();
@@ -118,10 +130,16 @@ int main(int argc, char** argv)
 
         // Display latency
         // uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-        // char top_string[30];
-        // sprintf(top_string, "%d m sec", delta_us);
-        // lv_label_set_text(top_text, top_string);
-        
+        char top_string[30];
+
+        sprintf(top_string, "Nein\n");
+
+        if (kHeld & KEY_RIGHT)
+        // if (kDown & KEY_A)
+        {
+            sprintf(top_string, "RIGHT holded");
+        }
+        lv_label_set_text(top_text, top_string);    
         lv_tick_inc(TICK_S);
     }
     return 0;

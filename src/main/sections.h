@@ -19,11 +19,11 @@ lv_disp_t *display_init(gfxScreen_t gfx_scr, lv_disp_draw_buf_t *draw_buf, lv_co
 
 // ui.c
 void create_shoulder_button();
-void create_bottom_container();
+lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
 
 // input.c
 void touch_cb_3ds(lv_indev_drv_t *drv, lv_indev_data_t *data);
-
+void encoder_cb_3ds(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
 #endif // SECTIONS_H

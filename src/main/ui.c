@@ -21,7 +21,7 @@ void create_shoulder_button()
 }
 
 
-void create_bottom_container()
+lv_obj_t *create_bottom_container()
 {
     static lv_style_t style_bg;
     lv_style_init(&style_bg);
@@ -55,6 +55,8 @@ void create_bottom_container()
     lv_btnmatrix_set_map(btnm1, btnm_map);
     lv_obj_add_style(btnm1, &style_bg, 0);
     lv_obj_add_style(btnm1, &style_btn, LV_PART_ITEMS);
+
+    return btnm1;
 }
 
 lv_obj_t *put_text_example(const char *string)
