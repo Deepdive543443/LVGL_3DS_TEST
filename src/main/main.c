@@ -87,17 +87,22 @@ void create_bottom_container()
     static lv_style_t style_btn;
     lv_style_init(&style_btn);
     lv_style_set_radius(&style_btn, 0);
+
+    lv_style_set_bg_color(&style_btn, lv_palette_main(LV_PALETTE_GREY));
+    lv_style_set_bg_grad_color(&style_btn, lv_palette_lighten(LV_PALETTE_GREY, 3));
+    lv_style_set_bg_grad_dir(&style_btn, LV_GRAD_DIR_VER);
+    
     lv_style_set_border_width(&style_btn, 1);
     lv_style_set_border_opa(&style_btn, LV_OPA_100);
-    lv_style_set_border_color(&style_btn, lv_palette_main(LV_PALETTE_GREY));
+    lv_style_set_border_color(&style_btn, lv_color_hex(0x777777)); //lv_palette_main(LV_PALETTE_GREY)
     lv_style_set_border_side(&style_btn, LV_BORDER_SIDE_INTERNAL);
     lv_style_set_radius(&style_btn, 0);
 
 
     static const char *btnm_map[] = {"A", "B", "X", "Y", ""};
     lv_obj_t *btnm1 = lv_btnmatrix_create(lv_scr_act());
-    lv_obj_align(btnm1, LV_ALIGN_BOTTOM_MID, 0, 15);
-    lv_obj_set_size(btnm1, lv_pct(100), lv_pct(20));
+    lv_obj_align(btnm1, LV_ALIGN_BOTTOM_MID, 0, 19);
+    lv_obj_set_size(btnm1, lv_pct(99), lv_pct(20));
     lv_btnmatrix_set_map(btnm1, btnm_map);
     lv_obj_add_style(btnm1, &style_bg, 0);
     lv_obj_add_style(btnm1, &style_btn, LV_PART_ITEMS);
