@@ -21,8 +21,8 @@ void update_joy_stick(lv_obj_t *js, circlePosition *js_read)
 {
     lv_obj_set_pos(
         js,
-        js_read->dx * 0.06493f,
-        -js_read->dy * 0.06493f
+        js_read->dx * 0.07792f,
+        -js_read->dy * 0.07792f
     );
 }
 
