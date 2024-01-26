@@ -4,7 +4,6 @@
 #define CANVAS_HEIGHT 80
 
 
-
 lv_obj_t *create_joystick()
 {
     // Create the container 
@@ -25,14 +24,15 @@ lv_obj_t *create_joystick()
     lv_obj_set_style_bg_color(js, lv_color_hex(0x777777), NULL);
     lv_obj_set_style_border_width(js, 5, NULL);
     lv_obj_set_style_border_color(js, lv_color_hex(0xbcbcbc), NULL);
-    
+
     return js;
 }
 
-void create_shoulder_button()
+ui_LR_t *create_shoulder_button()
 {
     /* Create L, R button that aligned with top left and top right of screen
      * Width: 90,  Height: 30*/
+
     lv_obj_t *btn_L = lv_btn_create(lv_scr_act());    /*Add a button the current screen*/                            /*Set its position*/
     lv_obj_set_size(btn_L, 90, 30);
     lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, -10, -5);
@@ -46,6 +46,12 @@ void create_shoulder_button()
     lv_obj_t *label_R = lv_label_create(btn_R);          /*Add a label to the button*/
     lv_label_set_text(label_R, "R");                     /*Set the labels text*/
     lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
+
+    ui_LR_t *output = (ui_LR_t *) malloc(sizeof(ui_LR_t));
+    output->L = btn_L;
+    output->R = btn_R;
+    return output;
+
 }
 
 

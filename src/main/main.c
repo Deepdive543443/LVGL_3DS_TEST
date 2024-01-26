@@ -73,7 +73,7 @@ int main(int argc, char** argv)
     lv_disp_set_default(disp_top);
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("init");
-    create_shoulder_button();
+    ui_LR_t *ui_LR = create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
 
@@ -97,6 +97,9 @@ int main(int argc, char** argv)
 
 
     // printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
+
+    lv_event_send(ui_LR->L, LV_EVENT_RELEASED, NULL);
+    lv_event_send(ui_LR->R, LV_EVENT_RELEASED, NULL);
     
     while(aptMainLoop())
     {
@@ -138,15 +141,32 @@ int main(int argc, char** argv)
         // Quit App
         if(kHeld & KEY_START) break;
 
+        if(kHeld & KEY_L)
+        {
+            ui_LR->L->state = LV_KEY_ENTER;
+            char top_string[30];
+            sprintf(top_string, "Pressing L");
+            lv_label_set_text(top_text, top_string);
+            lv_event_send(ui_LR->L, LV_EVENT_PRESSED, NULL); 
+        }
+
+        if(kHeld & KEY_R)
+        {
+            ui_LR->R->state = LV_KEY_ENTER;
+
+            lv_event_send(ui_LR->R, LV_EVENT_PRESSED, NULL);
+            lv_obj_set_style_bg_color(ui_LR->R, lv_color_hex(0xbcbcbc), NULL);
+        }
+
         update_joy_stick(js, &joy_stick);
 
         lv_timer_handler();
         while (ticker());
 
         // Display joystick
-        char top_string[30];
-        sprintf(top_string, "Joy stick x: %5d\nJoy stick y: %5d", joy_stick.dx, joy_stick.dy);
-        lv_label_set_text(top_text, top_string);    
+        // char top_string[30];
+        // sprintf(top_string, "Joy stick x: %5d\nJoy stick y: %5d", joy_stick.dx, joy_stick.dy);
+        // lv_label_set_text(top_text, top_string);    
         lv_tick_inc(TICK_S);
     }
     return 0;

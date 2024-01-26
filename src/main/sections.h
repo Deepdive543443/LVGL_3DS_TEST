@@ -1,6 +1,8 @@
 #ifndef SECTIONS_H
 #define SECTIONS_H
 
+#include "stdlib.h"
+
 #include "3ds.h"
 #include "lvgl-8.3.11/lvgl.h"
 
@@ -18,8 +20,23 @@ void flush_cb_3ds(gfxScreen_t gfx_scr, lv_disp_drv_t *disp, const lv_area_t *are
 lv_disp_t *display_init(gfxScreen_t gfx_scr, lv_disp_draw_buf_t *draw_buf, lv_color_t *buf1, lv_disp_drv_t *disp_drv);
 
 // ui.c
+typedef struct
+{
+    lv_obj_t *L;
+    lv_obj_t *R;
+} ui_LR_t;
+
+typedef struct
+{
+    lv_obj_t *A;
+    lv_obj_t *B;
+    lv_obj_t *X;
+    lv_obj_t *Y;
+} ui_ABXY_t;
+
+
 lv_obj_t *create_joystick();
-void create_shoulder_button();
+ui_LR_t *create_shoulder_button();
 lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
 
