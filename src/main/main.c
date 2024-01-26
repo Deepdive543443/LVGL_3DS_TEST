@@ -157,7 +157,7 @@ int main(int argc, char** argv)
             lv_event_send(ui_LR->R, LV_EVENT_PRESSED, NULL);
             lv_obj_set_style_bg_color(ui_LR->R, lv_color_hex(0xbcbcbc), NULL);
         }
-
+        
         update_joy_stick(js, &joy_stick);
 
         lv_timer_handler();

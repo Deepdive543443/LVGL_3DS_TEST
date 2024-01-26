@@ -37,14 +37,14 @@ ui_LR_t *create_shoulder_button()
     lv_obj_set_size(btn_L, 90, 30);
     lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, -10, -5);
     lv_obj_t *label_L = lv_label_create(btn_L);          /*Add a label to the button*/
-    lv_label_set_text(label_L, "L");                     /*Set the labels text*/
+    lv_label_set_text(label_L, "L  " LV_SYMBOL_IMAGE);                     /*Set the labels text*/
     lv_obj_align(label_L, LV_ALIGN_RIGHT_MID, 0, 0);
 
     lv_obj_t *btn_R = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
     lv_obj_set_size(btn_R, 90, 30);
     lv_obj_align(btn_R, LV_ALIGN_TOP_RIGHT, 10, -5);
     lv_obj_t *label_R = lv_label_create(btn_R);          /*Add a label to the button*/
-    lv_label_set_text(label_R, "R");                     /*Set the labels text*/
+    lv_label_set_text(label_R, LV_SYMBOL_IMAGE "  R");                     /*Set the labels text*/
     lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
 
     ui_LR_t *output = (ui_LR_t *) malloc(sizeof(ui_LR_t));
