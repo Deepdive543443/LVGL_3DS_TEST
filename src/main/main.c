@@ -48,35 +48,12 @@ int main(int argc, char** argv)
     lv_disp_set_default(disp_top);
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
-    ui_LR_t ui_LR = create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
-
-    lv_obj_update_layout(ui_LR.L);
-    const lv_point_t points_array_L[] = {
-        {-1, -1}/*Null point*/,
-        {(ui_LR.L->coords.x1 + ui_LR.L->coords.x2) / 2, (ui_LR.L->coords.y1 + ui_LR.L->coords.y2) / 2},
-    };
-    static lv_indev_drv_t indev_drv_L;
-    indev_drv_L.type = LV_INDEV_TYPE_BUTTON;
-    indev_drv_L.read_cb = virtual_L_cb;
-    lv_indev_t *l_indev = lv_indev_drv_register(&indev_drv_L);
-    lv_indev_set_button_points(l_indev, points_array_L);
-    
-    lv_obj_update_layout(ui_LR.R);
-    const lv_point_t points_array_R[] = {
-        {-1, -1}/*Null point*/,
-        {(ui_LR.R->coords.x1 + ui_LR.R->coords.x2) / 2, (ui_LR.R->coords.y1 + ui_LR.R->coords.y2) / 2},
-    };
-    static lv_indev_drv_t indev_drv_R;
-    indev_drv_R.type = LV_INDEV_TYPE_BUTTON;
-    indev_drv_R.read_cb = virtual_R_cb;
-    lv_indev_t *r_indev = lv_indev_drv_register(&indev_drv_R);
-    lv_indev_set_button_points(r_indev, points_array_R);
+    ui_LR_t ui_LR = create_shoulder_button();
 
     // Initial top screen's display, ui, and control 
     lv_disp_set_default(disp_btm);
-
 
     // Demo
     lv_demo_widgets();
@@ -164,5 +141,8 @@ int main(int argc, char** argv)
         // lv_label_set_text(top_text, top_string);    
         lv_tick_inc(TICK_S);
     }
+
+    free(ui_LR.point_array_L);
+    free(ui_LR.point_array_R);
     return 0;
 }

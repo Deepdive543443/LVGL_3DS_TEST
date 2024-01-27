@@ -24,6 +24,8 @@ typedef struct
 {
     lv_obj_t *L;
     lv_obj_t *R;
+    lv_point_t *point_array_L;
+    lv_point_t *point_array_R;
 } ui_LR_t;
 
 typedef struct

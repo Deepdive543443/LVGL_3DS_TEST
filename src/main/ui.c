@@ -72,9 +72,34 @@ ui_LR_t create_shoulder_button()
     lv_obj_add_event_cb(btn_L, display_event_cb, LV_EVENT_ALL, label_L);
     lv_obj_add_event_cb(btn_R, display_event_cb, LV_EVENT_ALL, label_R); /*Display the press stage of two button*/
 
+    lv_obj_update_layout(btn_L);
+    lv_point_t *points_array_L = (lv_point_t *) malloc(sizeof(lv_point_t) * 2);
+    points_array_L[0] = (lv_point_t) {-1, -1};
+    points_array_L[1] = (lv_point_t) {(btn_L->coords.x1 + btn_L->coords.x2) / 2, (btn_L->coords.y1 + btn_L->coords.y2) / 2};
+
+    static lv_indev_drv_t indev_drv_L;
+    indev_drv_L.type = LV_INDEV_TYPE_BUTTON;
+    indev_drv_L.read_cb = virtual_L_cb;
+    lv_indev_t *l_indev = lv_indev_drv_register(&indev_drv_L);
+    lv_indev_set_button_points(l_indev, points_array_L);
+
+    lv_obj_update_layout(btn_R);
+    lv_point_t *points_array_R = (lv_point_t *) malloc(sizeof(lv_point_t) * 2);
+    points_array_R[0] = (lv_point_t) {-1, -1};
+    points_array_R[1] = (lv_point_t) {(btn_R->coords.x1 + btn_R->coords.x2) / 2, (btn_R->coords.y1 + btn_R->coords.y2) / 2};
+
+    static lv_indev_drv_t indev_drv_R;
+    indev_drv_R.type = LV_INDEV_TYPE_BUTTON;
+    indev_drv_R.read_cb = virtual_R_cb;
+    lv_indev_t *r_indev = lv_indev_drv_register(&indev_drv_R);
+    lv_indev_set_button_points(r_indev, points_array_R);
+
+
     ui_LR_t output;
     output.L = btn_L;
     output.R = btn_R;
+    output.point_array_L = points_array_L;
+    output.point_array_R = points_array_R;
     return output;
 }
 
