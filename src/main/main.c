@@ -17,15 +17,6 @@ bool ticker()
     return delta_us < TICK_MS;
 }
 
-void update_joy_stick(lv_obj_t *js, circlePosition *js_read)
-{
-    lv_obj_set_pos(
-        js,
-        js_read->dx * 0.07792f,
-        -js_read->dy * 0.07792f
-    );
-}
-
 // User input place holder
 static u32 kDown;
 static u32 kHeld;
@@ -51,8 +42,6 @@ int main(int argc, char** argv)
     static lv_color_t buf1_top[WIDTH_TOP * HEIGHT_TOP];
     static lv_disp_drv_t disp_drv_top;        /*Descriptor of a display driver*/
     lv_disp_t *disp_top = display_init(GFX_TOP, &draw_buf_top, &buf1_top, &disp_drv_top);
-
-
 
 
 
@@ -152,23 +141,6 @@ int main(int argc, char** argv)
 
         // Quit App
         if(kHeld & KEY_START) break;
-
-        // if(kHeld & KEY_L)
-        // {
-        //     ui_LR->L->state = LV_KEY_ENTER;
-        //     char top_string[30];
-        //     sprintf(top_string, "Pressing L");
-        //     lv_label_set_text(top_text, top_string);
-        //     lv_event_send(ui_LR->L, LV_EVENT_PRESSED, NULL); 
-        // }
-
-        // if(kHeld & KEY_R)
-        // {
-        //     ui_LR->R->state = LV_KEY_ENTER;
-
-        //     lv_event_send(ui_LR->R, LV_EVENT_PRESSED, NULL);
-        //     lv_obj_set_style_bg_color(ui_LR->R, lv_color_hex(0xbcbcbc), NULL);
-        // }
         
         update_joy_stick(js, &joy_stick);
 

@@ -35,11 +35,11 @@ typedef struct
 } ui_ABXY_t;
 
 
-
 lv_obj_t *create_joystick();
 ui_LR_t *create_shoulder_button();
 lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
+void update_joy_stick(lv_obj_t *js, circlePosition *js_read);
 
 // input.c
 void virtual_LR_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);

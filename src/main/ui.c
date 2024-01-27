@@ -26,7 +26,6 @@ static void display_event_cb(lv_event_t *e)
     }
 }
 
-
 lv_obj_t *create_joystick()
 {
     // Create the container 
@@ -77,53 +76,6 @@ ui_LR_t *create_shoulder_button()
     output->L = btn_L;
     output->R = btn_R;
     return output;
-
-    /**
-     * Reference
-     */
-    // static void event_cb(lv_event_t * e)
-    // {
-    // lv_event_code_t code = lv_event_get_code(e);
-    // lv_obj_t * label = lv_event_get_user_data(e);
-
-    // switch(code) {
-    //     case LV_EVENT_PRESSED:
-    //         lv_label_set_text(label, "The last button event:\nLV_EVENT_PRESSED");
-    //         break;
-    //     case LV_EVENT_CLICKED:
-    //         lv_label_set_text(label, "The last button event:\nLV_EVENT_CLICKED");
-    //         break;
-    //     case LV_EVENT_LONG_PRESSED:
-    //         lv_label_set_text(label, "The last button event:\nLV_EVENT_LONG_PRESSED");
-    //         break;
-    //     case LV_EVENT_LONG_PRESSED_REPEAT:
-    //         lv_label_set_text(label, "The last button event:\nLV_EVENT_LONG_PRESSED_REPEAT");
-    //         break;
-    //     default:
-    //         break;
-    // }
-    // }
-
-    // /**
-    //  * Handle multiple events
-    //  */
-    // void lv_example_event_2(void)
-    // {
-    // lv_obj_t * btn = lv_btn_create(lv_scr_act());
-    // lv_obj_set_size(btn, 100, 50);
-    // lv_obj_center(btn);
-
-    // lv_obj_t * btn_label = lv_label_create(btn);
-    // lv_label_set_text(btn_label, "Click me!");
-    // lv_obj_center(btn_label);
-
-    // lv_obj_t * info_label = lv_label_create(lv_scr_act());
-    // lv_label_set_text(info_label, "The last button event:\nNone");
-
-    // lv_obj_add_event_cb(btn, event_cb, LV_EVENT_ALL, info_label);
-    // }
-
-
 }
 
 
@@ -191,4 +143,13 @@ lv_obj_t *put_text_example(const char *string)
     lv_label_set_text(label, string);
 
     return label;
+}
+
+void update_joy_stick(lv_obj_t *js, circlePosition *js_read)
+{
+    lv_obj_set_pos(
+        js,
+        js_read->dx * 0.07792f,
+        -js_read->dy * 0.07792f
+    );
 }
