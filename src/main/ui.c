@@ -109,24 +109,40 @@ ui_ABXY_t create_ABXY()
     lv_obj_t *cont = lv_obj_create(lv_scr_act());
     lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
     lv_obj_set_size(cont, 120, 120);
-    lv_obj_align(cont, LV_ALIGN_RIGHT_MID, -5, 0);
+    lv_obj_align(cont, LV_ALIGN_RIGHT_MID, -5, -20);
+
+    lv_obj_set_style_border_opa(cont, LV_OPA_TRANSP, NULL);
+    lv_obj_set_style_bg_opa(cont, LV_OPA_TRANSP, NULL);;
 
     // Create button
     lv_obj_t *btn_ptr[4];
     const char *btn_labels[] = {"A", "B", "X", "Y"};
-    const u32 btn_position[] = {35, 0, 0, 35, -35, 0, 0, -35};
+    lv_color_t colors[] = 
+    {
+        lv_color_hex(0xe06666), lv_color_hex(0xffd966),
+        lv_color_hex(0x8fce00), lv_color_hex(0x6fa8dc)
+    };
+    u32 offset = 35;
+    const u32 btn_position[] = {offset, 0, 0, offset, -offset, 0, 0, -offset};
     for (int i=0; i < 4;i++)
     {
         btn_ptr[i] = lv_obj_create(cont);
         lv_obj_t *label = lv_label_create(btn_ptr[i]);
         lv_label_set_text(label, btn_labels[i]);
-        lv_obj_center(btn_ptr[i]);
         lv_obj_center(label);
+
+        // Shape circle
         lv_obj_set_size(btn_ptr[i], 30, 30);
         lv_obj_set_style_radius(btn_ptr[i], LV_RADIUS_CIRCLE, NULL);
         lv_obj_set_style_clip_corner(btn_ptr[i], true, NULL);
         lv_obj_set_scrollbar_mode(btn_ptr[i], LV_SCROLLBAR_MODE_OFF);
+
+        // Position
+        lv_obj_center(btn_ptr[i]);
         lv_obj_set_pos(btn_ptr[i], btn_position[i * 2], btn_position[i * 2 + 1]);
+
+        // Color
+        lv_obj_set_style_bg_color(btn_ptr[i], colors[i], NULL);
     }
     
 
