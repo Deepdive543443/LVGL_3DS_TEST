@@ -137,9 +137,7 @@ int main(int argc, char** argv)
         while (ticker());
 
         // Display joystick
-        // char top_string[30];
-        // sprintf(top_string, "Joy stick x: %5d\nJoy stick y: %5d", joy_stick.dx, joy_stick.dy);
-        // lv_label_set_text(top_text, top_string);    
+        lv_label_set_text(top_text, debug_string);    
         lv_tick_inc(TICK_S);
     }
 

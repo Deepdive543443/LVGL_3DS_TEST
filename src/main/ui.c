@@ -3,6 +3,36 @@
 #define CANVAS_WIDTH 80
 #define CANVAS_HEIGHT 80
 
+void color_flip_cb(lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *label = lv_event_get_user_data(e);
+    lv_obj_t *target =lv_event_get_current_target(e);
+    // lv_obj_t *label = lv_obj_get_child(target, 0);
+
+    switch(code) 
+    {
+        case LV_EVENT_PRESSED:
+            lv_obj_set_style_text_color(label, lv_color_hex(0x2986cc), NULL);
+            // lv_obj_set_style_bg_color(target, lv_color_hex(0xffffff), NULL);
+            break;
+        case LV_EVENT_CLICKED:
+            lv_obj_set_style_text_color(label, lv_color_hex(0xffffff), NULL);
+            break;
+        case LV_EVENT_LONG_PRESSED:
+            lv_obj_set_style_text_color(label, lv_color_hex(0x2986cc), NULL);
+            // lv_obj_set_style_bg_color(target, lv_color_hex(0xffffff), NULL);
+            break;
+        case LV_EVENT_LONG_PRESSED_REPEAT:
+            lv_obj_set_style_text_color(label, lv_color_hex(0x2986cc), NULL);
+            // lv_obj_set_style_bg_color(target, lv_color_hex(0xffffff), NULL);
+            break;
+        default:
+            lv_obj_set_style_text_color(label, lv_color_hex(0xffffff), NULL);
+            break;
+    }
+}
+
 void display_event_cb(lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -153,6 +183,9 @@ ui_ABXY_t create_ABXY()
 
         // Callback
         lv_obj_update_layout(btn_ptr[i]);
+        // lv_obj_add_event_cb(btn_ptr[i], color_flip_cb, LV_EVENT_ALL, label);
+        lv_obj_add_event_cb(btn_ptr[i], display_event_cb, LV_EVENT_ALL, label); // Color flip callback
+
         points_array_ptr[i] = (lv_point_t *) malloc(sizeof(lv_point_t) * 2);
         points_array_ptr[i][0] = (lv_point_t) {-1, -1};
         points_array_ptr[i][1] = (lv_point_t)
@@ -163,7 +196,7 @@ ui_ABXY_t create_ABXY()
 
         drv_list_ABXY[i].type = LV_INDEV_TYPE_BUTTON;
         drv_list_ABXY[i].read_cb = press_callbacks[i];
-        lv_indev_t *indev = lv_indev_drv_register(&drv_list_ABXY[1]);
+        lv_indev_t *indev = lv_indev_drv_register(&drv_list_ABXY[i]);
         lv_indev_set_button_points(indev, points_array_ptr[i]);
     }
     
