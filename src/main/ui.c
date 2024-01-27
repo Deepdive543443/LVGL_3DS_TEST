@@ -90,7 +90,7 @@ ui_LR_t create_shoulder_button()
     lv_obj_set_size(btn_L, 90, 30);
     lv_obj_align(btn_L, LV_ALIGN_TOP_LEFT, -10, -5);
     lv_obj_t *label_L = lv_label_create(btn_L);          /*Add a label to the button*/
-    lv_label_set_text(label_L, "L  " LV_SYMBOL_IMAGE);                     /*Set the labels text*/
+    lv_label_set_text(label_L, "L  " LV_SYMBOL_VIDEO);                     /*Set the labels text*/
     lv_obj_align(label_L, LV_ALIGN_RIGHT_MID, 0, 0);
 
     lv_obj_t *btn_R = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/                            /*Set its position*/
