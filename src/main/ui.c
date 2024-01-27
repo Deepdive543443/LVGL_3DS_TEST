@@ -149,7 +149,7 @@ ui_ABXY_t create_ABXY()
     // Create button
     lv_obj_t *btn_ptr[4];
     lv_point_t *points_array_ptr[4];
-    const char *btn_labels[] = {"A", "B", "X", "Y"};
+    const char *btn_labels[] = {"A", "B", "Y", "X"};
     lv_color_t colors[] = 
     {
         lv_color_hex(0xe06666), lv_color_hex(0xffd966),
@@ -158,7 +158,7 @@ ui_ABXY_t create_ABXY()
     u32 offset = 35;
     const u32 btn_position[] = {offset, 0, 0, offset, -offset, 0, 0, -offset};
     static lv_indev_drv_t drv_list_ABXY[4];
-    void (*press_callbacks[4])() = {virtual_A_cb, virtual_B_cb, virtual_X_cb, virtual_Y_cb};
+    void (*press_callbacks[4])() = {virtual_A_cb, virtual_B_cb, virtual_Y_cb, virtual_X_cb};
 
     
     for (int i=0; i < 4;i++)
