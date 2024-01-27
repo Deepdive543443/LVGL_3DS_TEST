@@ -3,6 +3,23 @@
 #define CANVAS_WIDTH 80
 #define CANVAS_HEIGHT 80
 
+void list_item_add_cb(lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_group_list_t *glt = lv_event_get_user_data(e);
+
+    lv_obj_t *btn;  
+    btn = lv_list_add_btn(glt->list,  LV_SYMBOL_LIST, "x1:    x2:");
+    lv_obj_add_event_cb(btn, list_item_delete_cb, LV_EVENT_PRESSED, NULL);
+    lv_group_add_obj(glt->g, btn);
+}
+
+void list_item_delete_cb(lv_event_t *e)
+{
+    lv_obj_t *item = lv_event_get_target(e);
+    lv_obj_del_async(item);
+}
+
 void color_flip_cb(lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -59,23 +76,28 @@ void display_event_cb(lv_event_t *e)
 
 lv_obj_t *create_box_list(lv_group_t *g)
 {
+
     lv_obj_t *boxxes = lv_list_create(lv_scr_act());
     lv_obj_set_size(boxxes, 150, 160);
     lv_obj_align(boxxes, LV_ALIGN_TOP_MID, 0, 0);
 
-    // lv_group_add_obj(g, boxxes);
-    
+    // lv_group_list_t glt;
+    // glt.g = g;
+    // glt.list = boxxes;
+    lv_group_list_t *glt = (lv_group_list_t *) malloc(sizeof(lv_group_list_t));
+    glt->g = g;
+    glt->list = boxxes;
 
+    lv_obj_t *btn;
     lv_list_add_text(boxxes, "Boxxes");
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New"));
+
+    btn = lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
+    lv_obj_add_event_cb(btn, list_item_add_cb, LV_EVENT_PRESSED, glt);
+    lv_group_add_obj(g, btn);
+
     lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    // lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    // lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
 
     // lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
     // lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate");
@@ -87,7 +109,7 @@ lv_obj_t *create_box_list(lv_group_t *g)
     // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
     // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
 
-
+    free(glt);
     return boxxes;
 }
 

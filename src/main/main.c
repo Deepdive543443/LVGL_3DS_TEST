@@ -87,16 +87,6 @@ int main(int argc, char** argv)
     lv_indev_t *touch_indev = lv_indev_drv_register(&indev_drv_touch);
 
 
-    // static lv_indev_drv_t indev_drv_cross;
-    // lv_indev_drv_init(&indev_drv_cross);
-    // indev_drv_cross.type = LV_INDEV_TYPE_ENCODER;
-    // indev_drv_cross.read_cb = encoder_cb_3ds;
-    // lv_indev_t *enc_indev = lv_indev_drv_register(&indev_drv_cross);
-    
-    // // lv_group_t *g = lv_group_create();
-    // // lv_group_add_obj(g, boxxes);
-    // lv_indev_set_group(enc_indev, g);
-
     while(aptMainLoop())
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
