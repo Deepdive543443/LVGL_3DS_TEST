@@ -14,6 +14,7 @@ void color_flip_cb(lv_event_t *e)
     {
         case LV_EVENT_PRESSED:
             lv_obj_set_style_text_color(label, lv_color_hex(0x2986cc), NULL);
+            // lv_label_set_text(label, "PRESSED");
             // lv_obj_set_style_bg_color(target, lv_color_hex(0xffffff), NULL);
             break;
         case LV_EVENT_CLICKED:
@@ -139,8 +140,8 @@ ui_ABXY_t create_ABXY()
     // Create container
     lv_obj_t *cont = lv_obj_create(lv_scr_act());
     lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_size(cont, 120, 120);
-    lv_obj_align(cont, LV_ALIGN_RIGHT_MID, -5, -20);
+    lv_obj_set_size(cont, 130, 130);
+    lv_obj_align(cont, LV_ALIGN_RIGHT_MID, 0, -20);
 
     lv_obj_set_style_border_opa(cont, LV_OPA_TRANSP, NULL);
     lv_obj_set_style_bg_opa(cont, LV_OPA_TRANSP, NULL);;
@@ -162,9 +163,11 @@ ui_ABXY_t create_ABXY()
     
     for (int i=0; i < 4;i++)
     {
-        btn_ptr[i] = lv_obj_create(cont);
+        // btn_ptr[i] = lv_obj_create(cont);
+        btn_ptr[i] = lv_btn_create(cont);
         lv_obj_t *label = lv_label_create(btn_ptr[i]);
         lv_label_set_text(label, btn_labels[i]);
+        lv_label_set_recolor(label, true);
         lv_obj_center(label);
 
         // Shape circle
@@ -180,11 +183,12 @@ ui_ABXY_t create_ABXY()
         // Color
         lv_obj_set_style_bg_color(btn_ptr[i], colors[i], NULL);
         lv_obj_set_style_text_color(label, lv_color_hex(0xffffff), NULL);
+        lv_label_set_recolor(label, true);
 
         // Callback
         lv_obj_update_layout(btn_ptr[i]);
-        // lv_obj_add_event_cb(btn_ptr[i], color_flip_cb, LV_EVENT_ALL, label);
-        lv_obj_add_event_cb(btn_ptr[i], display_event_cb, LV_EVENT_ALL, label); // Color flip callback
+        lv_obj_add_event_cb(btn_ptr[i], color_flip_cb, LV_EVENT_ALL, label);
+        // lv_obj_add_event_cb(btn_ptr[i], display_event_cb, LV_EVENT_ALL, label); // Color flip callback
 
         points_array_ptr[i] = (lv_point_t *) malloc(sizeof(lv_point_t) * 2);
         points_array_ptr[i][0] = (lv_point_t) {-1, -1};
