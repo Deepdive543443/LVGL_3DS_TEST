@@ -44,10 +44,16 @@ int main(int argc, char** argv)
     lv_disp_t *disp_top = display_init(GFX_TOP, &draw_buf_top, &buf1_top, &disp_drv_top);
 
 
-
-    /* Choose one example or demo from below*/
-    // Examples
+    // Initial top screen's display, ui, and control 
     lv_disp_set_default(disp_top);
+    lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
+    lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
+    ui_LR_t ui_LR = create_shoulder_button();
+    lv_obj_t *btnm1 = create_bottom_container();
+    lv_obj_t *js = create_joystick();
+
+    
+
     const lv_point_t points_array[] = {{-1, -1}/*Null point*/, {5,5},{WIDTH_TOP - 5,5} };
     static lv_indev_drv_t indev_drv_LR;
     indev_drv_LR.type = LV_INDEV_TYPE_BUTTON;
@@ -55,15 +61,22 @@ int main(int argc, char** argv)
     lv_indev_t *lr_indev = lv_indev_drv_register(&indev_drv_LR);
     lv_indev_set_button_points(lr_indev, points_array);
 
-
-    lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
-    lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
-    ui_LR_t ui_LR = create_shoulder_button();
-    lv_obj_t *btnm1 = create_bottom_container();
-    lv_obj_t *js = create_joystick();
-
-
+    // Initial top screen's display, ui, and control 
     lv_disp_set_default(disp_btm);
+
+
+    // Demo
+    lv_demo_widgets();
+    int demo_idx = 0;
+    // lv_demo_benchmark();
+    // lv_example_get_started_1();
+    // lv_example_btnmatrix_2();
+    // lv_example_calendar_1();
+    // lv_example_style_13();
+    // lv_example_spinner_3ds();
+    // lv_example_anim_2();
+    // lv_example_style_1();
+
     // Touchpad init
     static lv_indev_drv_t indev_drv_touch;
     lv_indev_drv_init(&indev_drv_touch);      /*Basic initialization*/
@@ -77,23 +90,10 @@ int main(int argc, char** argv)
     indev_drv_cross.type = LV_INDEV_TYPE_ENCODER;
     indev_drv_cross.read_cb = encoder_cb_3ds;
     lv_indev_t *enc_indev = lv_indev_drv_register(&indev_drv_cross);
-
-
+    
     lv_group_t *g = lv_group_create();
     lv_group_add_obj(g, btnm1);
     lv_indev_set_group(enc_indev, g);
-
-    // Demo
-    lv_demo_widgets();
-    int demo_idx = 0;
-    // lv_demo_benchmark();
-    // lv_example_get_started_1();
-    // lv_example_btnmatrix_2();
-    // lv_example_calendar_1();
-    // lv_example_style_13();
-    // lv_example_spinner_3ds();
-    // lv_example_anim_2();
-    // lv_example_style_1();
 
     while(aptMainLoop())
     {
