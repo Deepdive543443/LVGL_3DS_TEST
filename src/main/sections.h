@@ -50,6 +50,10 @@ lv_obj_t *put_text_example(const char *string);
 void update_joy_stick(lv_obj_t *js, circlePosition *js_read);
 
 // input.c
+void virtual_A_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
+void virtual_B_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
+void virtual_X_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
+void virtual_Y_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
 void virtual_L_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
 void virtual_R_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
 void virtual_press_cb(u32 key, lv_indev_drv_t *drv, lv_indev_data_t *data);

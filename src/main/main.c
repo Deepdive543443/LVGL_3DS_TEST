@@ -145,9 +145,9 @@ int main(int argc, char** argv)
 
     free(ui_LR.point_array_L);
     free(ui_LR.point_array_R);
-    free(ui_ABXY.point_array_A);
-    free(ui_ABXY.point_array_B);
-    free(ui_ABXY.point_array_X);
-    free(ui_ABXY.point_array_Y);
+    // free(ui_ABXY.point_array_A);
+    // free(ui_ABXY.point_array_B);
+    // free(ui_ABXY.point_array_X);
+    // free(ui_ABXY.point_array_Y);
     return 0;
 }

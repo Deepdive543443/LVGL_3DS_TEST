@@ -143,6 +143,10 @@ ui_ABXY_t create_ABXY()
 
         // Color
         lv_obj_set_style_bg_color(btn_ptr[i], colors[i], NULL);
+
+        // Callback
+        lv_obj_update_layout(btn_ptr[i]);
+
     }
     
 
