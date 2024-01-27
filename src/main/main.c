@@ -50,7 +50,6 @@ int main(int argc, char** argv)
     lv_group_t *g = lv_group_create();
     
     lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
-    // lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
     ui_LR_t ui_LR = create_shoulder_button();
     ui_ABXY_t ui_ABXY = create_ABXY();

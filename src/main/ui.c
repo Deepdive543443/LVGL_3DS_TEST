@@ -81,9 +81,6 @@ lv_obj_t *create_box_list(lv_group_t *g)
     lv_obj_set_size(boxxes, 150, 160);
     lv_obj_align(boxxes, LV_ALIGN_TOP_MID, 0, 0);
 
-    // lv_group_list_t glt;
-    // glt.g = g;
-    // glt.list = boxxes;
     lv_group_list_t *glt = (lv_group_list_t *) malloc(sizeof(lv_group_list_t));
     glt->g = g;
     glt->list = boxxes;
@@ -94,20 +91,7 @@ lv_obj_t *create_box_list(lv_group_t *g)
     btn = lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
     lv_obj_add_event_cb(btn, list_item_add_cb, LV_EVENT_PRESSED, glt);
     lv_group_add_obj(g, btn);
-
     lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate"));
-    // lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-    // lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
-
-    // lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
 
     free(glt);
     return boxxes;
@@ -139,8 +123,9 @@ lv_obj_t *create_joystick()
 
 ui_LR_t create_shoulder_button()
 {
-    /* Create L, R button that aligned with top left and top right of screen
-     * Width: 90,  Height: 30*/
+    /** Create L, R button that aligned with top left and top right of screen
+     * Width: 90,  Height: 30
+     * */
 
     lv_obj_t *btn_L = lv_btn_create(lv_scr_act());    /*Add a button the current screen*/                            /*Set its position*/
     lv_obj_set_size(btn_L, 90, 30);
@@ -219,7 +204,6 @@ ui_ABXY_t create_ABXY()
     
     for (int i=0; i < 4;i++)
     {
-        // btn_ptr[i] = lv_obj_create(cont);
         btn_ptr[i] = lv_btn_create(cont);
         lv_obj_t *label = lv_label_create(btn_ptr[i]);
         lv_label_set_text(label, btn_labels[i]);
@@ -274,45 +258,6 @@ ui_ABXY_t create_ABXY()
     return output;
 }
 
-
-lv_obj_t *create_bottom_container()
-{
-    static lv_style_t style_bg;
-    lv_style_init(&style_bg);
-    lv_style_set_pad_all(&style_bg, 0);
-    lv_style_set_pad_gap(&style_bg, 0);
-    lv_style_set_clip_corner(&style_bg, true);
-    lv_style_set_radius(&style_bg, 14);
-    
-    lv_style_set_border_width(&style_bg, 0);
-
-
-    static lv_style_t style_btn;
-    lv_style_init(&style_btn);
-    lv_style_set_radius(&style_btn, 0);
-
-    lv_style_set_bg_color(&style_btn, lv_palette_main(LV_PALETTE_GREY));
-    lv_style_set_bg_grad_color(&style_btn, lv_palette_lighten(LV_PALETTE_GREY, 3));
-    lv_style_set_bg_grad_dir(&style_btn, LV_GRAD_DIR_VER);
-    
-    lv_style_set_border_width(&style_btn, 1);
-    lv_style_set_border_opa(&style_btn, LV_OPA_100);
-    lv_style_set_border_color(&style_btn, lv_color_hex(0x777777)); //lv_palette_main(LV_PALETTE_GREY)
-    lv_style_set_border_side(&style_btn, LV_BORDER_SIDE_INTERNAL);
-    lv_style_set_radius(&style_btn, 0);
-
-
-    static const char *btnm_map[] = {"A", "B", "X", "Y", ""};
-    lv_obj_t *btnm1 = lv_btnmatrix_create(lv_scr_act());
-    lv_obj_align(btnm1, LV_ALIGN_BOTTOM_MID, 0, 19);
-    lv_obj_set_size(btnm1, lv_pct(99), lv_pct(20));
-    lv_btnmatrix_set_map(btnm1, btnm_map);
-    lv_obj_add_style(btnm1, &style_bg, 0);
-    lv_obj_add_style(btnm1, &style_btn, LV_PART_ITEMS);
-
-    return btnm1;
-}
-
 lv_obj_t *put_text_example(const char *string)
 {
     static lv_style_t style;
@@ -325,11 +270,6 @@ lv_obj_t *put_text_example(const char *string)
                                                    * during inputing*/
     lv_style_set_pad_ver(&style, 20);
     lv_style_set_pad_left(&style, 5);
-
-    // lv_style_set_align(&style, LV_ALIGN_CENTER);
-
-    // lv_style_set_x(&style, lv_pct(2)); // percentage of 2 
-    // lv_style_set_y(&style, 180);
 
     /*Create an object with the new style*/
     lv_obj_t *obj = lv_obj_create(lv_scr_act());
