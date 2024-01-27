@@ -77,10 +77,12 @@ ui_LR_t create_shoulder_button()
     points_array_L[0] = (lv_point_t) {-1, -1};
     points_array_L[1] = (lv_point_t) {(btn_L->coords.x1 + btn_L->coords.x2) / 2, (btn_L->coords.y1 + btn_L->coords.y2) / 2};
 
-    static lv_indev_drv_t indev_drv_L;
-    indev_drv_L.type = LV_INDEV_TYPE_BUTTON;
-    indev_drv_L.read_cb = virtual_L_cb;
-    lv_indev_t *l_indev = lv_indev_drv_register(&indev_drv_L);
+    void (*functions[2])() = {virtual_L_cb, virtual_R_cb};
+    static lv_indev_drv_t drv_list[2];
+    
+    drv_list[0].type = LV_INDEV_TYPE_BUTTON;
+    drv_list[0].read_cb = functions[0];
+    lv_indev_t *l_indev = lv_indev_drv_register(&drv_list[0]);
     lv_indev_set_button_points(l_indev, points_array_L);
 
     lv_obj_update_layout(btn_R);
@@ -88,10 +90,9 @@ ui_LR_t create_shoulder_button()
     points_array_R[0] = (lv_point_t) {-1, -1};
     points_array_R[1] = (lv_point_t) {(btn_R->coords.x1 + btn_R->coords.x2) / 2, (btn_R->coords.y1 + btn_R->coords.y2) / 2};
 
-    static lv_indev_drv_t indev_drv_R;
-    indev_drv_R.type = LV_INDEV_TYPE_BUTTON;
-    indev_drv_R.read_cb = virtual_R_cb;
-    lv_indev_t *r_indev = lv_indev_drv_register(&indev_drv_R);
+    drv_list[1].type = LV_INDEV_TYPE_BUTTON;
+    drv_list[1].read_cb = functions[1];
+    lv_indev_t *r_indev = lv_indev_drv_register(&drv_list[1]);
     lv_indev_set_button_points(r_indev, points_array_R);
 
 
@@ -116,6 +117,7 @@ ui_ABXY_t create_ABXY()
 
     // Create button
     lv_obj_t *btn_ptr[4];
+    lv_point_t *points_array_ptr[4];
     const char *btn_labels[] = {"A", "B", "X", "Y"};
     lv_color_t colors[] = 
     {
@@ -124,6 +126,9 @@ ui_ABXY_t create_ABXY()
     };
     u32 offset = 35;
     const u32 btn_position[] = {offset, 0, 0, offset, -offset, 0, 0, -offset};
+    void (*press_callbacks[4])() = {virtual_A_cb, virtual_B_cb, virtual_X_cb, virtual_Y_cb};
+
+    
     for (int i=0; i < 4;i++)
     {
         btn_ptr[i] = lv_obj_create(cont);
@@ -147,6 +152,19 @@ ui_ABXY_t create_ABXY()
 
         // Callback
         lv_obj_update_layout(btn_ptr[i]);
+        points_array_ptr[i] = (lv_point_t *) malloc(sizeof(lv_point_t) * 2);
+        points_array_ptr[i][0] = (lv_point_t) {-1, -1};
+        points_array_ptr[i][1] = (lv_point_t)
+        {
+            (btn_ptr[i]->coords.x1 + btn_ptr[i]->coords.x2) / 2,
+            (btn_ptr[i]->coords.y1 + btn_ptr[i]->coords.y2) / 2
+        };
+
+
+
+
+
+
 
     }
     
@@ -157,6 +175,10 @@ ui_ABXY_t create_ABXY()
     output.B = btn_ptr[1];
     output.X = btn_ptr[2];
     output.Y = btn_ptr[3];
+    output.point_array_A = points_array_ptr[0];
+    output.point_array_B = points_array_ptr[1];
+    output.point_array_X = points_array_ptr[2];
+    output.point_array_Y = points_array_ptr[3];
     return output;
 }
 
