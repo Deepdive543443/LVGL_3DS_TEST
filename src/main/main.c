@@ -52,9 +52,13 @@ int main(int argc, char** argv)
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
 
-    
-
-    const lv_point_t points_array[] = {{-1, -1}/*Null point*/, {5,5},{WIDTH_TOP - 5,5} };
+    lv_obj_update_layout(ui_LR.L);
+    lv_obj_update_layout(ui_LR.R);
+    const lv_point_t points_array[] = {
+        {-1, -1}/*Null point*/,
+        {(ui_LR.L->coords.x1 + ui_LR.L->coords.x2) / 2, (ui_LR.L->coords.y1 + ui_LR.L->coords.y2) / 2},
+        {(ui_LR.R->coords.x1 + ui_LR.R->coords.x2) / 2, (ui_LR.R->coords.y1 + ui_LR.R->coords.y2) / 2}
+    };
     static lv_indev_drv_t indev_drv_LR;
     indev_drv_LR.type = LV_INDEV_TYPE_BUTTON;
     indev_drv_LR.read_cb = virtual_LR_cb;
