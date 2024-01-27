@@ -57,22 +57,35 @@ void display_event_cb(lv_event_t *e)
     }
 }
 
-lv_obj_t *create_box_list()
+lv_obj_t *create_box_list(lv_group_t *g)
 {
     lv_obj_t *boxxes = lv_list_create(lv_scr_act());
     lv_obj_set_size(boxxes, 150, 160);
     lv_obj_align(boxxes, LV_ALIGN_TOP_MID, 0, 0);
 
+    // lv_group_add_obj(g, boxxes);
+    
+
     lv_list_add_text(boxxes, "Boxxes");
-    lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
-    lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
-    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+    lv_group_add_obj(g, lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:"));
+
+    // lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    // lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
 
 
     return boxxes;
