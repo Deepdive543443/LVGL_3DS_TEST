@@ -78,11 +78,11 @@ ui_LR_t create_shoulder_button()
     points_array_L[1] = (lv_point_t) {(btn_L->coords.x1 + btn_L->coords.x2) / 2, (btn_L->coords.y1 + btn_L->coords.y2) / 2};
 
     void (*functions[2])() = {virtual_L_cb, virtual_R_cb};
-    static lv_indev_drv_t drv_list[2];
+    static lv_indev_drv_t drv_list_LR[2];
     
-    drv_list[0].type = LV_INDEV_TYPE_BUTTON;
-    drv_list[0].read_cb = functions[0];
-    lv_indev_t *l_indev = lv_indev_drv_register(&drv_list[0]);
+    drv_list_LR[0].type = LV_INDEV_TYPE_BUTTON;
+    drv_list_LR[0].read_cb = functions[0];
+    lv_indev_t *l_indev = lv_indev_drv_register(&drv_list_LR[0]);
     lv_indev_set_button_points(l_indev, points_array_L);
 
     lv_obj_update_layout(btn_R);
@@ -90,9 +90,9 @@ ui_LR_t create_shoulder_button()
     points_array_R[0] = (lv_point_t) {-1, -1};
     points_array_R[1] = (lv_point_t) {(btn_R->coords.x1 + btn_R->coords.x2) / 2, (btn_R->coords.y1 + btn_R->coords.y2) / 2};
 
-    drv_list[1].type = LV_INDEV_TYPE_BUTTON;
-    drv_list[1].read_cb = functions[1];
-    lv_indev_t *r_indev = lv_indev_drv_register(&drv_list[1]);
+    drv_list_LR[1].type = LV_INDEV_TYPE_BUTTON;
+    drv_list_LR[1].read_cb = functions[1];
+    lv_indev_t *r_indev = lv_indev_drv_register(&drv_list_LR[1]);
     lv_indev_set_button_points(r_indev, points_array_R);
 
 
@@ -126,6 +126,7 @@ ui_ABXY_t create_ABXY()
     };
     u32 offset = 35;
     const u32 btn_position[] = {offset, 0, 0, offset, -offset, 0, 0, -offset};
+    static lv_indev_drv_t drv_list_ABXY[4];
     void (*press_callbacks[4])() = {virtual_A_cb, virtual_B_cb, virtual_X_cb, virtual_Y_cb};
 
     
@@ -160,12 +161,10 @@ ui_ABXY_t create_ABXY()
             (btn_ptr[i]->coords.y1 + btn_ptr[i]->coords.y2) / 2
         };
 
-
-
-
-
-
-
+        drv_list_ABXY[i].type = LV_INDEV_TYPE_BUTTON;
+        drv_list_ABXY[i].read_cb = press_callbacks[i];
+        lv_indev_t *indev = lv_indev_drv_register(&drv_list_ABXY[1]);
+        lv_indev_set_button_points(indev, points_array_ptr[i]);
     }
     
 
