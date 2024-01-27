@@ -103,6 +103,42 @@ ui_LR_t create_shoulder_button()
     return output;
 }
 
+ui_ABXY_t create_ABXY()
+{
+    // Create container
+    lv_obj_t *cont = lv_obj_create(lv_scr_act());
+    lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_size(cont, 120, 120);
+    lv_obj_align(cont, LV_ALIGN_RIGHT_MID, -5, 0);
+
+    // Create button
+    lv_obj_t *btn_ptr[4];
+    const char *btn_labels[] = {"A", "B", "X", "Y"};
+    const u32 btn_position[] = {35, 0, 0, 35, -35, 0, 0, -35};
+    for (int i=0; i < 4;i++)
+    {
+        btn_ptr[i] = lv_obj_create(cont);
+        lv_obj_t *label = lv_label_create(btn_ptr[i]);
+        lv_label_set_text(label, btn_labels[i]);
+        lv_obj_center(btn_ptr[i]);
+        lv_obj_center(label);
+        lv_obj_set_size(btn_ptr[i], 30, 30);
+        lv_obj_set_style_radius(btn_ptr[i], LV_RADIUS_CIRCLE, NULL);
+        lv_obj_set_style_clip_corner(btn_ptr[i], true, NULL);
+        lv_obj_set_scrollbar_mode(btn_ptr[i], LV_SCROLLBAR_MODE_OFF);
+        lv_obj_set_pos(btn_ptr[i], btn_position[i * 2], btn_position[i * 2 + 1]);
+    }
+    
+
+    ui_ABXY_t output;
+    output.container = cont;
+    output.A = btn_ptr[0];
+    output.B = btn_ptr[1];
+    output.X = btn_ptr[2];
+    output.Y = btn_ptr[3];
+    return output;
+}
+
 
 lv_obj_t *create_bottom_container()
 {

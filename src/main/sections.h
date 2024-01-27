@@ -30,15 +30,21 @@ typedef struct
 
 typedef struct
 {
+    lv_obj_t *container;
     lv_obj_t *A;
     lv_obj_t *B;
     lv_obj_t *X;
     lv_obj_t *Y;
+    lv_point_t *point_array_A;
+    lv_point_t *point_array_B;
+    lv_point_t *point_array_X;
+    lv_point_t *point_array_Y;
 } ui_ABXY_t;
 
 
 lv_obj_t *create_joystick();
 ui_LR_t create_shoulder_button();
+ui_ABXY_t create_ABXY();
 lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
 void update_joy_stick(lv_obj_t *js, circlePosition *js_read);

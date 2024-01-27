@@ -51,6 +51,7 @@ int main(int argc, char** argv)
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
     ui_LR_t ui_LR = create_shoulder_button();
+    ui_ABXY_t ui_ABXY = create_ABXY();
 
     // Initial top screen's display, ui, and control 
     lv_disp_set_default(disp_btm);
