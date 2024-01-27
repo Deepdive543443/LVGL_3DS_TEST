@@ -1,23 +1,24 @@
 #include "sections.h"
 
-void virtual_LR_cb(lv_indev_drv_t *drv, lv_indev_data_t *data)
+
+void virtual_L_cb(lv_indev_drv_t *drv, lv_indev_data_t *data)
+{
+    virtual_LR_cb(KEY_L, drv, data);
+}
+
+void virtual_R_cb(lv_indev_drv_t *drv, lv_indev_data_t *data)
+{
+    virtual_LR_cb(KEY_R, drv, data);
+}
+
+void virtual_LR_cb(u32 key, lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     u32 kDown = hidKeysDown();
     u32 kHeld = hidKeysHeld();
-    u8 id = 0;
     
-    if (kHeld & KEY_L)
+    if (kHeld & key)
     {
-        id = 1;
-    }
-    else if (kHeld & KEY_R)
-    {
-        id = 2;
-    }
-
-    if (id > 0)
-    {
-        data->btn_id = id;
+        data->btn_id = 1;
         data->state = LV_INDEV_STATE_PRESSED;
     }
     else
