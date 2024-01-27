@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 
 
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
-    lv_obj_t *top_text = put_text_example("init");
+    lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
     ui_LR_t *ui_LR = create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
@@ -95,13 +95,6 @@ int main(int argc, char** argv)
     // lv_example_anim_2();
     // lv_example_style_1();
 
-
-
-    // printf("Hello, LVGL on 3ds\nPress SELECT to switch demo");
-
-    lv_event_send(ui_LR->L, LV_EVENT_RELEASED, NULL);
-    lv_event_send(ui_LR->R, LV_EVENT_RELEASED, NULL);
-    
     while(aptMainLoop())
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
