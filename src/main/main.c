@@ -48,10 +48,11 @@ int main(int argc, char** argv)
     lv_disp_set_default(disp_top);
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
-    lv_obj_t *btnm1 = create_bottom_container();
+    // lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
     ui_LR_t ui_LR = create_shoulder_button();
     ui_ABXY_t ui_ABXY = create_ABXY();
+    lv_obj_t *boxxes = create_box_list();
 
     // Initial top screen's display, ui, and control 
     lv_disp_set_default(disp_btm);
@@ -83,7 +84,7 @@ int main(int argc, char** argv)
     lv_indev_t *enc_indev = lv_indev_drv_register(&indev_drv_cross);
     
     lv_group_t *g = lv_group_create();
-    lv_group_add_obj(g, btnm1);
+    lv_group_add_obj(g, boxxes);
     lv_indev_set_group(enc_indev, g);
 
     while(aptMainLoop())

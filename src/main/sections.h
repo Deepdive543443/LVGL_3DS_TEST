@@ -47,6 +47,7 @@ typedef struct
 
 void color_flip_cb(lv_event_t *e);
 void display_event_cb(lv_event_t *e);
+lv_obj_t *create_box_list();
 lv_obj_t *create_joystick();
 ui_LR_t create_shoulder_button();
 ui_ABXY_t create_ABXY();

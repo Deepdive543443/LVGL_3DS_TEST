@@ -57,6 +57,27 @@ void display_event_cb(lv_event_t *e)
     }
 }
 
+lv_obj_t *create_box_list()
+{
+    lv_obj_t *boxxes = lv_list_create(lv_scr_act());
+    lv_obj_set_size(boxxes, 150, 160);
+    lv_obj_align(boxxes, LV_ALIGN_TOP_MID, 0, 0);
+
+    lv_list_add_text(boxxes, "Boxxes");
+    lv_list_add_btn(boxxes, LV_SYMBOL_FILE, "New");
+    lv_list_add_btn(boxxes, LV_SYMBOL_GPS, "Navigate");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+    lv_list_add_btn(boxxes, LV_SYMBOL_LIST, "x1:    x2:");
+
+
+    return boxxes;
+}
+
 lv_obj_t *create_joystick()
 {
     // Create the container 
@@ -270,7 +291,7 @@ lv_obj_t *put_text_example(const char *string)
     lv_style_set_pad_ver(&style, 20);
     lv_style_set_pad_left(&style, 5);
 
-    lv_style_set_align(&style, LV_ALIGN_CENTER);
+    // lv_style_set_align(&style, LV_ALIGN_CENTER);
 
     // lv_style_set_x(&style, lv_pct(2)); // percentage of 2 
     // lv_style_set_y(&style, 180);
@@ -278,6 +299,7 @@ lv_obj_t *put_text_example(const char *string)
     /*Create an object with the new style*/
     lv_obj_t *obj = lv_obj_create(lv_scr_act());
     lv_obj_add_style(obj, &style, 0);
+    lv_obj_align(obj, LV_ALIGN_CENTER, 0, 90);
 
     lv_obj_t *label = lv_label_create(obj);
     lv_label_set_text(label, string);
