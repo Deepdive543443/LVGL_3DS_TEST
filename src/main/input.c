@@ -3,15 +3,15 @@
 
 void virtual_L_cb(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
-    virtual_LR_cb(KEY_L, drv, data);
+    virtual_press_cb(KEY_L, drv, data);
 }
 
 void virtual_R_cb(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
-    virtual_LR_cb(KEY_R, drv, data);
+    virtual_press_cb(KEY_R, drv, data);
 }
 
-void virtual_LR_cb(u32 key, lv_indev_drv_t *drv, lv_indev_data_t *data)
+void virtual_press_cb(u32 key, lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     u32 kDown = hidKeysDown();
     u32 kHeld = hidKeysHeld();
