@@ -3,7 +3,7 @@
 #define CANVAS_WIDTH 80
 #define CANVAS_HEIGHT 80
 
-static void display_event_cb(lv_event_t *e)
+void display_event_cb(lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *label = lv_event_get_user_data(e);
