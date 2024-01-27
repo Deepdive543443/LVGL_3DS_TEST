@@ -59,6 +59,14 @@ int main(int argc, char** argv)
     /* Choose one example or demo from below*/
     // Examples
     lv_disp_set_default(disp_top);
+    const lv_point_t points_array[] = {{-1, -1}, {5,5},{WIDTH_TOP - 5,5} };
+    static lv_indev_drv_t indev_drv_LR;
+    indev_drv_LR.type = LV_INDEV_TYPE_BUTTON;
+    indev_drv_LR.read_cb = virtual_LR_cb;
+    lv_indev_t *lr_indev = lv_indev_drv_register(&indev_drv_LR);
+    lv_indev_set_button_points(lr_indev, points_array);
+
+
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("init");
     ui_LR_t *ui_LR = create_shoulder_button();
@@ -145,22 +153,22 @@ int main(int argc, char** argv)
         // Quit App
         if(kHeld & KEY_START) break;
 
-        if(kHeld & KEY_L)
-        {
-            ui_LR->L->state = LV_KEY_ENTER;
-            char top_string[30];
-            sprintf(top_string, "Pressing L");
-            lv_label_set_text(top_text, top_string);
-            lv_event_send(ui_LR->L, LV_EVENT_PRESSED, NULL); 
-        }
+        // if(kHeld & KEY_L)
+        // {
+        //     ui_LR->L->state = LV_KEY_ENTER;
+        //     char top_string[30];
+        //     sprintf(top_string, "Pressing L");
+        //     lv_label_set_text(top_text, top_string);
+        //     lv_event_send(ui_LR->L, LV_EVENT_PRESSED, NULL); 
+        // }
 
-        if(kHeld & KEY_R)
-        {
-            ui_LR->R->state = LV_KEY_ENTER;
+        // if(kHeld & KEY_R)
+        // {
+        //     ui_LR->R->state = LV_KEY_ENTER;
 
-            lv_event_send(ui_LR->R, LV_EVENT_PRESSED, NULL);
-            lv_obj_set_style_bg_color(ui_LR->R, lv_color_hex(0xbcbcbc), NULL);
-        }
+        //     lv_event_send(ui_LR->R, LV_EVENT_PRESSED, NULL);
+        //     lv_obj_set_style_bg_color(ui_LR->R, lv_color_hex(0xbcbcbc), NULL);
+        // }
         
         update_joy_stick(js, &joy_stick);
 

@@ -42,6 +42,7 @@ lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
 
 // input.c
+void virtual_LR_cb(lv_indev_drv_t *drv, lv_indev_data_t *data);
 void touch_cb_3ds(lv_indev_drv_t *drv, lv_indev_data_t *data);
 void encoder_cb_3ds(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
