@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     /* Choose one example or demo from below*/
     // Examples
     lv_disp_set_default(disp_top);
-    const lv_point_t points_array[] = {{-1, -1}, {5,5},{WIDTH_TOP - 5,5} };
+    const lv_point_t points_array[] = {{-1, -1}/*Null point*/, {5,5},{WIDTH_TOP - 5,5} };
     static lv_indev_drv_t indev_drv_LR;
     indev_drv_LR.type = LV_INDEV_TYPE_BUTTON;
     indev_drv_LR.read_cb = virtual_LR_cb;
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 
     lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_SCROLLABLE); // We don't want the top screen to be scrollable
     lv_obj_t *top_text = put_text_example("Hello\nLVGL 3DS");
-    ui_LR_t *ui_LR = create_shoulder_button();
+    ui_LR_t ui_LR = create_shoulder_button();
     lv_obj_t *btnm1 = create_bottom_container();
     lv_obj_t *js = create_joystick();
 
@@ -134,6 +134,11 @@ int main(int argc, char** argv)
 
         // Quit App
         if(kHeld & KEY_START) break;
+
+        if(kHeld & KEY_R)
+        {
+            lv_obj_set_style_bg_color(ui_LR.R, lv_color_hex(0xbcbcbc), NULL);
+        }
         
         update_joy_stick(js, &joy_stick);
 

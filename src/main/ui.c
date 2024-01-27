@@ -50,7 +50,7 @@ lv_obj_t *create_joystick()
     return js;
 }
 
-ui_LR_t *create_shoulder_button()
+ui_LR_t create_shoulder_button()
 {
     /* Create L, R button that aligned with top left and top right of screen
      * Width: 90,  Height: 30*/
@@ -70,11 +70,11 @@ ui_LR_t *create_shoulder_button()
     lv_obj_align(label_R, LV_ALIGN_LEFT_MID, 0, 0);
 
     lv_obj_add_event_cb(btn_L, display_event_cb, LV_EVENT_ALL, label_L);
-    lv_obj_add_event_cb(btn_R, display_event_cb, LV_EVENT_ALL, label_R);
+    lv_obj_add_event_cb(btn_R, display_event_cb, LV_EVENT_ALL, label_R); /*Display the press stage of two button*/
 
-    ui_LR_t *output = (ui_LR_t *) malloc(sizeof(ui_LR_t));
-    output->L = btn_L;
-    output->R = btn_R;
+    ui_LR_t output;
+    output.L = btn_L;
+    output.R = btn_R;
     return output;
 }
 

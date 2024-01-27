@@ -36,7 +36,7 @@ typedef struct
 
 
 lv_obj_t *create_joystick();
-ui_LR_t *create_shoulder_button();
+ui_LR_t create_shoulder_button();
 lv_obj_t *create_bottom_container();
 lv_obj_t *put_text_example(const char *string);
 void update_joy_stick(lv_obj_t *js, circlePosition *js_read);
